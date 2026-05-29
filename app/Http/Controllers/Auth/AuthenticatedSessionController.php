@@ -25,10 +25,14 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        // 1. Obtenemos el usuario que acaba de iniciar sesión
+        $user = $request->user();
+        // 2. Armamos el mensaje usando comillas dobles para que PHP lea las variables por dentro
+        $mensaje = "¡Bienvenido de nuevo {$user->name} {$user->apellido}! Preparamos las mejores ofertas para vos.";
+        // 3. Lo mandamos con la misma variable 'bienvenida' que configuramos en tu HTML antes
+        return redirect('/')->with('status', $mensaje);
     }
 
     /**

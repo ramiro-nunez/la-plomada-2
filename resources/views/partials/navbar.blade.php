@@ -20,14 +20,18 @@
           
           <!-- Se utiliza el helper global sesion para detectar si hay un usario
               logueado con email y mostrar un boton u otro dependiendo de eso. -->
-          @if(session()->has('user_email'))
-            <a class="nav-link text-danger" href="{{ url('/salir') }}">
-                <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
-            </a>
-          @else
-            <a class="nav-link text-warning" href="/iniciar-sesion">
-            <i class="bi bi-person-lock"></i>Iniciar Sesión</a>
-          @endif
+              @auth
+          <form method="POST" action="{{ route('logout') }}" class="d-inline">
+              @csrf
+              <a class="nav-link text-danger" href="javascript:void(0)" onclick="event.preventDefault(); this.closest('form').submit();">
+                  <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+              </a>
+          </form>
+            @else
+          <a class="nav-link text-warning" href="{{ route('login') }}">
+              <i class="bi bi-person-lock"></i> Iniciar Sesión
+          </a>
+            @endauth
         </div>
       </div>
   </div>
