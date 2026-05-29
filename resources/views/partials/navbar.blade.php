@@ -18,16 +18,16 @@
           <a class="nav-link {{ request()->is('terms') ? 'nav-active' : ''}}" href="/terms">Terminos y condiciones</a>
           <a class="nav-link {{ request()->is('contactanos') ? 'nav-active' : ''}}" href="/contactanos">Contacto</a>
           
-          <!-- Se utiliza el helper global sesion para detectar si hay un usario
-              logueado con email y mostrar un boton u otro dependiendo de eso. -->
-          @if(session()->has('user_email'))
-            <a class="nav-link text-danger" href="{{ url('/salir') }}">
-                <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
-            </a>
+          <!-- se verifica que haya una sesión activa, sino muestra el botón de iniciar sesión -->
+          @auth
+            <form method="POST" action="{{ route('logout') }}">
+              @csrf
+              <button type="submit" class="nav-link text-borderline-danger">Cerrar Sesión</button>
+            </form>
           @else
             <a class="nav-link text-warning" href="/iniciar-sesion">
             <i class="bi bi-person-lock"></i>Iniciar Sesión</a>
-          @endif
+          @endauth
         </div>
       </div>
   </div>
