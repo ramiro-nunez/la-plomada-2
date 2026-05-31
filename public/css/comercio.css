@@ -1,52 +1,75 @@
+/* Una versión más fuerte para cuando el fondo es muy "ruidoso" */
+h2 {
+    text-shadow:
+        0px 0px 10px rgba(0, 0, 0, 0.9),
+        2px 2px 5px rgba(0, 0, 0, 1);
+    color: white;
+}
 /* Estilos para el header de comercio */
 .encabezado-comercio {
-    position: relative;
-    background: linear-gradient(rgba(26, 56, 87, 0.404), rgba(0, 51, 102, 0.295)), url('../img/comercializacion/vendedor.png');
+    background:
+        linear-gradient(rgba(26, 56, 87, 0.404), rgba(0, 51, 102, 0.295)),
+        url("../img/comercializacion/vendedor.jpg");
     background-size: cover;
     background-position: center;
-    background-attachment: scroll;
-    padding-top: 8rem;
-    padding-bottom: 8rem;
-    min-height: 60vh;
-    height: 500px;
-    border-bottom: 3px solid #ff9900;
+    width: 100%;
+    aspect-ratio: 16 / 8; /* El alto se calcula solo en base al ancho */
+    min-height: 200px; /* Nunca medirá menos de esto */
+    max-height: 500px;
+    height: auto; /* Dejá que el aspect-ratio mande */
+    border-bottom: 3px solid #e67e22;
 }
 
 .encabezado-terms {
-    position: relative;
-    background: linear-gradient(rgba(26, 56, 87, 0.404), rgba(0, 51, 102, 0.295)), url('../img/terminos/terminos.png');
+    background:
+        linear-gradient(rgba(26, 56, 87, 0.404), rgba(0, 51, 102, 0.295)),
+        url("../img/terminos/terminos.jpg");
     background-size: cover;
     background-position: center;
-    background-attachment: scroll;
-    padding-top: 8rem;
-    padding-bottom: 8rem;
-    min-height: 60vh;
-    height: 500px;
-    border-bottom: 3px solid #ff9900;
+    width: 100%;
+    aspect-ratio: 16 / 8; /* El alto se calcula solo en base al ancho */
+    min-height: 200px; /* Nunca medirá menos de esto */
+    max-height: 500px;
+    height: auto; /* Dejá que el aspect-ratio mande */
+    border-bottom: 3px solid #e67e22;
 }
 
 .encabezado-catalogo {
-    position: relative;
-    background: linear-gradient(rgba(26, 56, 87, 0.404), rgba(0, 51, 102, 0.295)), url('../img/catalogo/catalogo.jpg');
+    background:
+        linear-gradient(rgba(26, 56, 87, 0.404), rgba(0, 51, 102, 0.295)),
+        url("../img/catalogo/catalogo.jpg");
     background-size: cover;
     background-position: center;
-    background-attachment: scroll;
-    padding-top: 8rem;
-    padding-bottom: 8rem;
-    min-height: 60vh;
-    height: 500px;
+    width: 100%;
+    aspect-ratio: 16 / 8; /* El alto se calcula solo en base al ancho */
+    min-height: 200px; /* Nunca medirá menos de esto */
+    max-height: 500px;
+    height: auto; /* Dejá que el aspect-ratio mande */
     border-bottom: 3px solid #ff9900;
-    
 }
 
 .subtitulo-seccion {
     font-style: italic;
     font-weight: 600;
-    color: #2D4030;
+    color: #e67e22;
 }
 
 .fondo {
-    background-color: #F9F7F2;
+    background-image:
+        linear-gradient(
+            to bottom,
+            rgba(45, 58, 39, 1) 0%,
+            rgba(45, 58, 39, 0) 60%
+        ),
+        url("../img/bkg-img3.jpg");
+    /* Técnica de fijado */
+    background-attachment: fixed; /* La imagen no se mueve al hacer scroll */
+    background-position: center; /* Siempre centrada */
+    background-repeat: no-repeat;
+    background-size: cover; /* Se estira para cubrir todo el ancho/alto */
+
+    /* Color de fondo de respaldo por si la imagen tarda en cargar */
+    background-color: #1a1a1a;
 }
 
 .product-card {
@@ -61,10 +84,10 @@
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.368);
 }
 
-.product-img{
-    width: 100%; 
-    height: 100%; 
-    border-top-left-radius: 10px; 
+.product-img {
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
 

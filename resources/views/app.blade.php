@@ -1,5 +1,10 @@
+<!-- Página principal donde se inicializa el encabezado
+    y dónde se incluyen los componentes parciales que son
+    iguales para todas las rutas. Será como el "padre" del 
+    del cual se extiendan las demas vistas.
+ -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,12 +19,17 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-  @include('partials.navbar') 
+
+  @include('partials.navbar') <!-- Incluye el componente armado navbar -->
+
   <main class="flex-grow-1 fondo" >
-    @yield('content')
+    <!-- Es como un campo vacío donde se renderizaran
+      los componentes segun las rutas -->
+    @yield('content') 
+    
   </main>
 
-  @include('partials.footer')
+  @include('partials.footer') <!-- Incluye el componente armado navbar -->
 
   <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 </body>

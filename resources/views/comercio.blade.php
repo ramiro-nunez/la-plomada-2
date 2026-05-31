@@ -1,9 +1,9 @@
-@extends('app')
-@section('title', 'Comercialización')
+@extends('app') <!-- Lo siguiente se extiende del padre app -->
 
+@section('title', 'Comercialización')
 @section('content')
     <div class="encabezado-comercio d-flex align-items-center justify-content-center">
-        <h1 class="fw-bold text-white display-3 text-center">COMERCIALIZACIÓN</h1>
+        <h1 class="display-5 fw-bold text-white">COMERCIALIZACIÓN</h1>
     </div>
     <div class="fondo py-5">
         <div class="container py-4">
@@ -59,7 +59,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Shipping Costs Table -->
+            <!-- tabla de costos de envio -->
             <div class="row justify-content-center mt-5">
                 <div class="col col-lg-8">
                     <div class="card shadow-sm border-0 d-flex flex-column">
@@ -111,12 +111,12 @@
             </div>
         </div>
     </div>
-    <!-- Payment Methods -->
+    <!-- Metodos de pago -->
     <div class="fondo py-4">
         <div class="container">
             <div class="text-center mb-5">
                 <h2 class="display-6 fw-bold mb-3 subtitulo-seccion">Medios de Pago</h2>
-                <p class="text-secondary">Ofrecemos múltiples opciones de pago para tu comodidad y seguridad</p>
+                <p class="text-white fw-bold">Ofrecemos múltiples opciones de pago para tu comodidad y seguridad</p>
             </div>
             
             <div class="row g-4">
@@ -175,7 +175,7 @@
             </div>
         </div>
     </div>
-    <!-- Policies -->
+    <!-- Politicas -->
     <section class="fondo py-5">
         <div class="container py-4">
             <h2 class="display-6 fw-bold text-center mb-5 subtitulo-seccion">Políticas de Venta</h2>
@@ -238,7 +238,7 @@
         </div>
     </section>
 
-    <!-- Contact CTA -->
+    <!-- Info de contacto -->
     <section class="py-5 text-white" style="background-color: #2D4030;">
         <div class="container py-4 text-center">
             <div class="mx-auto" style="max-width: 800px;">
@@ -246,12 +246,12 @@
                 <p class="lead opacity-75 mb-5">Nuestro equipo está disponible para ayudarte con cualquier consulta</p>
                 
                 <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
-                    <a href="#" class="btn btn-outline-light rounded-pill px-4 py-3 fw-bold d-flex align-items-center justify-content-center gap-2 border-2">
+                    <div class="border border-light rounded-pill px-4 py-3 fw-bold d-flex align-items-center justify-content-center gap-2 text-white">
                         <i class="bi bi-telephone-fill"></i> +54 3794 11-1111
-                    </a>
-                    <a href="#" class="btn btn-outline-light rounded-pill px-4 py-3 fw-bold d-flex align-items-center justify-content-center gap-2 border-2">
+                    </div>
+                    <div class="border border-light rounded-pill px-4 py-3 fw-bold d-flex align-items-center justify-content-center gap-2 text-white">
                         <i class="bi bi-envelope-fill"></i> info@laplomada.com.ar
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>

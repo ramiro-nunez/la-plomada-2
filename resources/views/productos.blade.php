@@ -1,4 +1,4 @@
-@extends('app')
+@extends('app') <!-- Se extiende del padre app -->
 
 @section('title', 'Productos')
 <?php

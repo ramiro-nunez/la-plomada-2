@@ -1,10 +1,13 @@
 /* Header de contacto con el degradado de La Plomada */
 .contacto-hero {
-    background: linear-gradient(135deg, #d68c0d 0%, #0c560d 100%);
-    padding-top: 8rem;
-    padding-bottom: 8rem;
-    min-height: 60vh;
-    height: 500px;
+    background:
+        linear-gradient(rgba(26, 56, 87, 0.404), rgba(0, 51, 102, 0.295)),
+        url("../img/contactanos.jpg");
+    background-size: cover;
+    width: 100%;
+    aspect-ratio: 16 / 8;
+    min-height: 200px; /* Nunca medirá menos de esto */
+    max-height: 500px;
     border-bottom: 3px solid #ff9900;
 }
 

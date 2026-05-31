@@ -1,3 +1,4 @@
+<!-- Componente Footer -->
 <footer class="text-light py-4" style="background-color: #4A4A4A;">
     <div class="container-fluid text-center">
         <div class="row">

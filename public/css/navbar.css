@@ -1,13 +1,13 @@
 /* Fondo personalizado */
 .navbar-plomada {
-    background-color: #2d4030;
-    border-bottom: 3px solid #ff9900;
+    background-color: #2d3a27;
+    border-bottom: 3px solid #ff8c00;
     padding: 1rem 2rem;
     min-height: auto;
 }
 
 .navbar-brand {
-    color: #ffffff;
+    color: #f4f4f4;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -30,16 +30,11 @@
     transform: translateY(-2px);
 }
 
-.navbar-collapse {
-    background-color: #2d4030;
-}
-
 .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255,0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
-.navbar-brand.nav-active,
 .nav-link.nav-active,
-.nav-link.active {
+.navbar-brand.nav-active {
     color: #ff9900;
     font-weight: 700;
     border-top: 2px solid #ff9900;

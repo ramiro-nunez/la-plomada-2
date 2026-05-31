@@ -19,7 +19,7 @@
 .quienes-hero {
     background:
         linear-gradient(rgba(26, 56, 87, 0.404), rgba(0, 51, 102, 0.295)),
-        url("../img/sobrenos/nos-confianza.png");
+        url("../img/sobrenos/nos-confianza.jpg");
     background-size: cover;
     width: 100%;
     aspect-ratio: 16 / 8; /* El alto se calcula solo en base al ancho */
@@ -34,17 +34,30 @@
     border-radius: 20px;
 }
 
-.dev-card:hover {
-    transform: scale(1.05);
-    background: #ffffff;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+.mini-toast {
+    visibility: hidden;
+    min-width: 120px;
+    background-color: #333; /* Color oscuro tipo plomo */
+    color: #fff;
+    text-align: center;
+    border-radius: 25px; /* Redondeadito */
+    padding: 6px 12px;
+    position: absolute;
+    z-index: 1000;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+    font-size: 13px;
+    opacity: 0;
+    margin-top: 0.5rem;
+    white-space: nowrap;
+    transition:
+        opacity 0.2s,
+        transform 0.2s;
 }
 
-.dev-card img {
-    filter: grayscale(20%);
-    transition: filter 0.3s;
-}
-
-.dev-card:hover img {
-    filter: grayscale(0%);
+.mini-toast.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
 }

@@ -1,13 +1,12 @@
-@extends('app')
+@extends('app')<!-- Lo siguiente se extiende del padre app -->
 
 @section('title', 'Contacto')
-
 @section('content')
 <div class="contacto-page">
     <section class="contacto-hero text-white d-flex align-items-center text-center py-5">
         <div class="container">
             <i class="bi bi-chat-dots display-1 mb-3"></i>
-            <h1 class="display-4 fw-bold">CONTÁCTANOS</h1>
+            <h1 class="display-4 fw-bold">CONTACTANOS</h1>
             <p class="lead opacity-90">Estamos aquí para ayudarte a equipar tu próxima aventura.</p>
         </div>
     </section>
@@ -52,17 +51,18 @@
             <div class="row g-5">
                 <div class="col-lg-7">
                     <div class="bg-white rounded-4 shadow p-4 p-md-5">
-                        <h2 class="fw-bold mb-4">Envíanos un Mensaje</h2>
+                        <h3 class="fw-bold mb-4">Envíanos un Mensaje</h3>
                         <form action="{{ url('/contactanos') }}" method="POST">
-                            @csrf
+                            @csrf  <!-- Genera un token que es solicitado por Laravel 
+                             buscando evitar ataques maliciosos -->
                             <div class="mb-3">
                                 <label for="nombre" class="form-label fw-semibold">Nombre Completo *</label>
-                                <input type="text" id="nombre" name="nombre" class="form-control form-control-lg" placeholder="Tu nombre" required>
+                                <input id="nombre" name="nombre" class="form-control" type="text" placeholder="Ingresa tu nombre" required>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="email" class="form-label fw-semibold">Email *</label>
-                                    <input type="email" id="email" name="email" class="form-control" placeholder="juan@ejemplo.com" required>
+                                    <input id="email" name="email" class="form-control" type="email" placeholder="ejemplo@gmail.com" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="telefono" class="form-label fw-semibold">Teléfono</label>
@@ -119,7 +119,7 @@
                     </div>
 
                     <div class="mt-5">
-                        <h4 class="fw-bold mb-3">Ubicación</h4>
+                        <h2 class="fw-bold mb-3">Ubicación</h2>
                         <div class="rounded-4 overflow-hidden shadow-sm border" style="height: 250px; background: #eee; display: grid; place-items: center;">
                             <div class="text-center">
                                 <i class="bi bi-geo-alt-fill text-danger display-4"></i>

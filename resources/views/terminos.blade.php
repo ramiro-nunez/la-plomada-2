@@ -1,6 +1,6 @@
-@extends('app')
-@section('title', 'Comercialización')
+@extends('app') <!-- Se extiende del padre app -->
 
+@section('title', 'Comercialización')
 @section('content')
     <div class="encabezado-terms d-flex align-items-center justify-content-center">
         <h1 class="fw-bold text-white display-3 text-center">TÉRMINOS Y CONDICIONES</h1>
