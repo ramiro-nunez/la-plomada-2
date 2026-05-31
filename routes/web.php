@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Middleware\IsAdminMiddleware;
 
 /* Rutas que solo renderizan vistas */
 Route::get('/', function () {
@@ -43,4 +44,9 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     // El logout SIEMPRE debe ser por POST para evitar ataques maliciosos (XSS/CSRF) mediante links simples
     Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
+});
+
+Route::middleware(['auth', IsAdminMiddleware::class])->group(function () {
+    Route::get('/panel-control', [AdminController::class, 'create']);
+    Route::post('/crear-producto', [ProductController::class, 'store']);
 });
