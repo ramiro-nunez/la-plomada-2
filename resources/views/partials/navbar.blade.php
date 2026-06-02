@@ -18,16 +18,20 @@
           <a class="nav-link {{ request()->is('terms') ? 'nav-active' : ''}}" href="/terms">Terminos y condiciones</a>
           <a class="nav-link {{ request()->is('contactanos') ? 'nav-active' : ''}}" href="/contactanos">Contacto</a>
           
-          <!-- se verifica que haya una sesión activa, sino muestra el botón de iniciar sesión -->
-          @auth
-            <form method="POST" action="{{ route('logout') }}">
+          <!-- Se utiliza el helper global sesion para detectar si hay un usario
+              logueado con email y mostrar un boton u otro dependiendo de eso. -->
+              @auth
+          <form method="POST" action="{{ route('logout') }}" class="d-inline">
               @csrf
-              <button type="submit" class="nav-link text-borderline-danger">Cerrar Sesión</button>
-            </form>
-          @else
-            <a class="nav-link text-warning" href="/iniciar-sesion">
-            <i class="bi bi-person-lock"></i>Iniciar Sesión</a>
-          @endauth
+              <a class="nav-link text-danger" href="javascript:void(0)" onclick="event.preventDefault(); this.closest('form').submit();">
+                  <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+              </a>
+          </form>
+            @else
+          <a class="nav-link text-warning" href="{{ route('login') }}">
+              <i class="bi bi-person-lock"></i> Iniciar Sesión
+          </a>
+            @endauth
         </div>
       </div>
   </div>

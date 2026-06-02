@@ -1,52 +1,21 @@
 <?php
-namespace App\Http\Controllers;
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ContactoController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Middleware\IsAdminMiddleware;
 
-/* Rutas que solo renderizan vistas */
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/contactanos', function () {
-    return view('contactanos');
-});
-Route::get('/quienes-somos', function () {
-    return view('quienes-somos');});
-Route::get('/comercio', function () {
-    return view('comercio');
-});
-Route::get('/terms', function () {
-    return view('terminos');
-});
-Route::get('/productos', function () {
-    return view('productos');
-});
 
-/* Rutas que utilizan controlador */
-Route::post('/contactanos', [ContactoController::class, 'procesar']);
 
-Route::middleware('guest')->group(function () {
-    Route::get('/registrarse', [RegisterController::class, 'create'])->name('registrarse.index');
-    Route::post('/registrarse', [RegisterController::class, 'store'])->name('registrarse.store');
-});
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-// Rutas para usuarios anónimos
-Route::middleware('guest')->group(function () {
-    Route::get('/iniciar-sesion', [LoginController::class, 'create'])->name('iniciar-sesion');
-    Route::post('/iniciar-sesion', [LoginController::class, 'store'])->name('iniciar-sesion.store');
-});
-
-// Rutas para usuarios autenticados
 Route::middleware('auth')->group(function () {
-    // El logout SIEMPRE debe ser por POST para evitar ataques maliciosos (XSS/CSRF) mediante links simples
-    Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', IsAdminMiddleware::class])->group(function () {
-    Route::get('/panel-control', [AdminController::class, 'create']);
-    Route::post('/crear-producto', [ProductController::class, 'store']);
-});
+require __DIR__.'/auth.php';
