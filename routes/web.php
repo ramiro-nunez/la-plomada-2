@@ -6,6 +6,7 @@ use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Middleware\IsAdminMiddleware;
+use App\Http\Controllers\ProductController;
 
 /* Rutas que solo renderizan vistas */
 Route::get('/', function () {
@@ -47,6 +48,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', IsAdminMiddleware::class])->group(function () {
-    Route::get('/panel-control', [AdminController::class, 'create']);
-    Route::post('/crear-producto', [ProductController::class, 'store']);
+    Route::get('/panel-control', [AdminController::class, 'panel']);
+    Route::get('/crear-articulo', [AdminController::class, 'crear']);
 });
+
+Route::get('/panel-control', [ProductController::class, 'index'])->name('productos.index');
