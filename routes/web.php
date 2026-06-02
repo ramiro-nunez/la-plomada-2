@@ -7,10 +7,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+/* Rutas que solo renderizan vistas */
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::get('/contactanos', function () {
+    return view('contactanos');
+});
+Route::get('/quienes-somos', function () {
+    return view('quienes-somos');});
+Route::get('/comercio', function () {
+    return view('comercio');
+});
+Route::get('/terms', function () {
+    return view('terminos');
+});
+Route::get('/productos', function () {
+    return view('productos');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
