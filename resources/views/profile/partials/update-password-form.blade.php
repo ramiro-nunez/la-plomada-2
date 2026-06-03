@@ -1,4 +1,4 @@
-<section class="card shadow-sm border border-gray-200 mt-4">
+<section id="seccion-password" class="card shadow-sm border border-gray-200 mt-4">
     <div class="card-body p-4">
         
         <header class="mb-4">

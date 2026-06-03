@@ -23,7 +23,7 @@
                 <input id="name" name="name" type="text" 
                        class="form-control @error('name') is-invalid @enderror" 
                        value="{{ old('name', $user->name) }}" 
-                       required autofocus autocomplete="name">
+                       required autocomplete="name">
                 
                 @error('name')
                     <div class="invalid-feedback">

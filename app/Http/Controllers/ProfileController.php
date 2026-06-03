@@ -42,9 +42,16 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        try {
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],
         ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Si falla la contraseña, redirige al perfil clavando la vista en el modal de eliminar
+            return Redirect::route('profile.edit')
+                ->withErrors($e->validator, 'userDeletion')
+                ->withFragment('seccion-eliminar');
+        }
 
         $user = $request->user();
 
