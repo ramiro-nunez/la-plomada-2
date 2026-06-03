@@ -1,181 +1,96 @@
-@extends('app') <!-- Se extiende del padre app -->
+@extends('app')
 
-@section('title', 'Productos')
-<?php
-$productosCanas = [
-    // --- CAÑAS ---
-    [
-        'nombre' => 'Caña Telescópica Shimano FX (3.00m)',
-        'precio' => 145000,
-        'imagen' => 'cana1.jpg'
-    ],
-    [
-        'nombre' => 'Caña Baitcasting Marine Sports Titan (1.98m)',
-        'precio' => 210000,
-        'imagen' => 'cana2.jpg'
-    ],
-    [
-        'nombre' => 'Caña de Mosca Waterdog Fly Series (#5)',
-        'precio' => 185000,
-        'imagen' => 'cana3.jpg'
-    ]
-];
-$productosReeles = [
-    // --- REELES ---
-    [
-        'nombre' => 'Reel Frontal Daiwa Sweepfire 4000',
-        'precio' => 85000,
-        'imagen' => 'reel1.jpg'
-    ],
-    [
-        'nombre' => 'Reel Rotativo Abu Garcia Black Max (Huevito)',
-        'precio' => 195000,
-        'imagen' => 'reel2.jpg'
-    ],
-    [
-        'nombre' => 'Reel Rotativo Penn Squall Level Wind (Trolling)',
-        'precio' => 280000,
-        'imagen' => 'reel3.jpg'
-    ]
-];
-$productosHerramientas = [
-    // --- SEÑUELOS Y LÍNEAS ---
-    [
-        'nombre' => 'Señuelo Rapala Super Shad Rap (14cm)',
-        'precio' => 32000,
-        'imagen' => 'señuelo1.jpg'
-    ],
-    [
-        'nombre' => 'Señuelo Cuchara Giratoria Mepps Aglia (N°4)',
-        'precio' => 12500,
-        'imagen' => 'señuelo2.jpg'
-    ],
-    [
-        'nombre' => 'Hilo Multifilamento Sufix 832 (150m - 40lbs)',
-        'precio' => 48000,
-        'imagen' => 'hilo.jpg'
-    ],
-    [
-        'nombre' => 'Caja de Anzuelos Mustad Serie 92247 (x50 unidades)',
-        'precio' => 15000,
-        'imagen' => 'anzuelo.jpg'
-    ],
+@section('title', 'Catálogo de Productos')
 
-    // --- ACCESORIOS Y HERRAMIENTAS ---
-    [
-        'nombre' => 'Caja de Pesca Plano 3 Bandejas Articuladas',
-        'precio' => 65000,
-        'imagen' => 'caja.jpg'
-    ],
-    [
-        'nombre' => 'Pinza de Pesca Multifunción Spinit (Acero Inox)',
-        'precio' => 22000,
-        'imagen' => 'pinza.jpg'
-    ]
-];
-$productosIndumentaria = [
-    // --- INDUMENTARIA TÉCNICA ---
-    [
-        'nombre' => 'Wader de Neoprene Waterdog (4mm)',
-        'precio' => 350000,
-        'imagen' => 'wader.jpg'
-    ],
-    [
-        'nombre' => 'Camisa de Pesca Columbia PFG con Filtro UV',
-        'precio' => 110000,
-        'imagen' => 'camisa.jpg'
-    ],
-    [
-        'nombre' => 'Bolso Estanco DryBag 20 Litros',
-        'precio' => 42000,
-        'imagen' => 'bolso.jpg'
-    ]
-];
-?>
 @section('content')
-<div class="fondo pb-2">
-    <section class="encabezado-catalogo d-flex align-items-center justify-content-center">
-        <h1 class="display-3 text-white fw-bold">CATÁLOGO</h1>
-    </section>
-    <!-- container Reeles -->
-    <section class=" " style="background-color: #2D4030;">
-    <div class="container py-5">
-        <h2 class="text-center subtitulo-seccion text-white fw-bold mb-5">Reeles</h2>
-        <div class="row justify-content-center align-items-center g-4">
-            <!-- card reel -->
-            @foreach ($productosReeles as $reel)
-            <div class="col-sm-3">
-                <div class=" text-center product-card-dark">
-                    <div class="mx-auto mb-1 overflow-hidden product-img">
-                        <img src="/img/catalogo/{{ $reel['imagen'] }}" class="w-100 h-100 ">
+<div class="container py-5">
+    <div class="row">
+        
+        <div class="col-md-3 mb-4">
+            <div class="card shadow-sm border border-gray-200">
+                <div class="card-body">
+                    <h5 class="fw-bold mb-3 text-dark">Categorías</h5>
+                    
+                    <div class="list-group list-group-flush">
+                        <a href="{{ route('catalog.index', request()->except('categoria')) }}" 
+                           class="list-group-item list-group-item-action {{ !request('categoria') ? 'active bg-dark border-dark' : '' }}">
+                            Todas las categorías
+                        </a>
+                        
+                        @foreach($categorias as $categoria)
+                            <a href="{{ route('catalog.index', array_merge(request()->query(), ['categoria' => $categoria->id])) }}" 
+                               class="list-group-item list-group-item-action {{ request('categoria') == $categoria->id ? 'active bg-dark border-dark' : '' }}">
+                                {{ $categoria->nombre }}
+                            </a>
+                        @endforeach
                     </div>
-                    <h4 class="text-success fs-6 fs-sm-3 fw-bold mb-0">{{ $reel['precio'] }} </h4>
-                    <h5 class="fw-semibold fs-6 fs-sm-3 mb-0 pb-2">{{ $reel['nombre'] }} </h5>
                 </div>
             </div>
-            @endforeach
         </div>
-    </div>
-    </section>
-    <!-- container Cañas -->
-    <section class=" my-5">
-    <div class="container">
-        <h2 class="text-center subtitulo-seccion fw-bold mb-5">Cañas</h2>
-        <div class="row justify-content-center align-items-center g-4">
-            <!-- card caña -->
-            @foreach ($productosCanas as $cana)
-            <div class="col-sm-3">
-                <div class=" text-center product-card-dark">
-                    <div class="mx-auto mb-1 overflow-hidden product-img">
-                        <img src="/img/catalogo/{{ $cana['imagen'] }}" class="w-100 h-100 ">
+
+        <div class="col-md-9">
+            
+            <div class="d-flex justify-content-between align-items-center mb-4 bg-white p-3 rounded shadow-sm border border-gray-200">
+                <p class="text-muted mb-0">Mostrando <span class="fw-bold text-dark">{{ $productos->count() }}</span> productos</p>
+                
+                <form action="{{ route('catalog.index') }}" method="GET" class="d-flex align-items-center gap-2">
+                    @if(request('categoria'))
+                        <input type="hidden" name="categoria" value="{{ request('categoria') }}">
+                    @endif
+                    
+                    <label for="orden" class="text-nowrap small text-muted mb-0">Ordenar por:</label>
+                    <select name="orden" id="orden" class="form-select form-select-sm" onchange="this.form.submit()">
+                        <option value="nuevos" {{ request('orden') == 'nuevos' ? 'selected' : '' }}>Más nuevos</option>
+                        <option value="precio_asc" {{ request('orden') == 'precio_asc' ? 'selected' : '' }}>Menor precio</option>
+                        <option value="precio_desc" {{ request('orden') == 'precio_desc' ? 'selected' : '' }}>Mayor precio</option>
+                        <option value="alfabetico_asc" {{ request('orden') == 'alfabetico_asc' ? 'selected' : '' }}>Nombre (A-Z)</option>
+                    </select>
+                </form>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+            @forelse($productos as $producto)
+            <div class="col-sm-4 mb-4">
+                <div class="border text-center product-card bg-white h-100 d-flex flex-column p-1 justify-content-between rounded shadow-sm">
+                    
+                    <div class="mb-2 overflow-hidden product-img">
+                        @if($producto->variantes->first() && $producto->variantes->first()->url_img)
+                            <img src="{{ asset('img/catalogo/' . $producto->variantes->first()->url_img) }}" class="w-100 h-100 img-catalogo" alt="{{ $producto->nombre }}">
+                        @else
+                            <img src="{{ asset('img/catalogo/cana2.jpg') }}" class="w-100 h-100 img-catalogo" alt="{{ $producto->nombre }}">
+                        @endif
                     </div>
-                    <h4 class="text-success fs-6 fs-sm-3 fw-bold mb-0">{{ $cana['precio'] }} </h4>
-                    <h5 class="fw-semibold fs-6 fs-sm-3 mb-0 pb-2">{{ $cana['nombre'] }} </h5>
+
+                    <div class="product-info flex-grow-1 d-flex flex-column justify-content-center mb-3">
+                        <span class="text-uppercase text-muted x-small fw-bold mb-1">{{ $producto->categoria->nombre }}</span>
+                        
+                        <h5 class="fw-semibold fs-6 mb-1">{{ $producto->nombre }}</h5>
+                        
+                        <div class="mt-1">
+                            <span class="text-muted x-small d-block lh-1">Desde</span>
+                            <h4 class="text-success fs-5 fw-bold mb-0">
+                                ${{ number_format($producto->variantes_min_precio, 0, ',', '.') }}
+                            </h4>
+                        </div>
+                    </div>
+
+                    <div class="product-action mt-auto">
+                        <a href="#" class="btn btn-sm btn-dark w-100 fw-semibold py-2">
+                            <i class="bi bi-eye-fill me-1"></i> Ver detalles
+                        </a>
+                    </div>
+
                 </div>
             </div>
-            @endforeach
-        </div>
-    </div>
-    </section>
-    <!-- container Accesorios y Herramientas -->
-    <section class=" " style="background-color: #1B263B;">
-    <div class="container py-5">
-        <h2 class="text-center text-white subtitulo-seccion fw-bold mb-5">Accesorios y Herramientas</h2>
-        <div class="row justify-content-center align-items-center g-4">
-            <!-- card herramienta -->
-            @foreach ($productosHerramientas as $herramienta)
-            <div class="col-sm-3">
-                <div class=" text-center product-card-dark">
-                    <div class="mx-auto mb-1 overflow-hidden product-img">
-                        <img src="/img/catalogo/{{ $herramienta['imagen'] }}" class="w-100 h-100 ">
-                    </div>
-                    <h4 class="text-success fs-6 fs-sm-3 fw-bold mb-0">{{ $herramienta['precio'] }} </h4>
-                    <h5 class="fw-semibold fs-6 fs-sm-3 mb-0 pb-2">{{ $herramienta['nombre'] }} </h5>
-                </div>
+            @empty
+            <div class="col-12 text-center py-5">
+                <i class="bi bi-emoji-frown fs-1 text-muted"></i>
+                <p class="text-muted mt-2">No encontramos productos en esta categoría.</p>
             </div>
-            @endforeach
-        </div>
-    </div>
-    </section>
-    <!-- container Indumentaria -->
-    <section class=" my-5 ">
-    <div class="container">
-        <h2 class="text-center subtitulo-seccion fw-bold mb-5">Indumentaria</h2>
-        <div class="row justify-content-center align-items-center g-4">
-            <!-- card indumentaria -->
-            @foreach ($productosIndumentaria as $indumentaria)
-            <div class="col-sm-3">
-                <div class=" text-center product-card-dark">
-                    <div class="mx-auto mb-1 overflow-hidden product-img">
-                        <img src="/img/catalogo/{{ $indumentaria['imagen'] }}" class="w-100 h-100 ">
-                    </div>
-                    <h4 class="text-success fs-6 fs-sm-3 fw-bold mb-0">{{ $indumentaria['precio'] }} </h4>
-                    <h5 class="fw-semibold fs-6 fs-sm-3 mb-0 pb-2">{{ $indumentaria['nombre'] }} </h5>
-                </div>
+            @endforelse
             </div>
-            @endforeach
+
         </div>
     </div>
-    </section>
 </div>
 @endsection

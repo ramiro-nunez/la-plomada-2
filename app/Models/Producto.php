@@ -19,12 +19,12 @@ class Producto extends Model
     // Un producto pertenece a una categoría
     public function categoria(): BelongsTo
     {
-        return $this->belongsTo(Categoria::class, 'id_categoria');
+        return $this->belongsTo(Categoria::class, 'id_categoria', 'id');
     }
 
     // Un producto tiene muchas variantes
     public function variantes(): HasMany
     {
-        return $this->hasMany(Var_producto::class, 'id_producto');
+        return $this->hasMany(Var_producto::class, 'id_producto', 'id');
     }
 }

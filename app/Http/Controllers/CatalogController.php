@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Categoria;
+use App\Models\Producto;
+use Illuminate\Http\Request;
+
+class CatalogController extends Controller
+{
+    public function index(Request $request)
+    {
+        $categoriaId = $request->input('categoria');
+        $orden = $request->input('orden');
+
+        // Iniciamos consulta mapeando tus relaciones en español
+        $query = Producto::with('categoria', 'variantes')
+            ->withMin('variantes', 'precio'); // Genera la columna 'variantes_min_precio'
+
+        // Filtro por categoría
+        if ($categoriaId) {
+            $query->where('id_categoria', $categoriaId);
+        }
+
+        // Ordenamiento por el alias que genera withMin
+        switch ($orden) {
+            case 'precio_asc':
+                $query->orderBy('variantes_min_precio', 'asc');
+                break;
+            case 'precio_desc':
+                $query->orderBy('variantes_min_precio', 'desc');
+                break;
+            case 'alfabetico_asc':
+                $query->orderBy('nombre', 'asc');
+                break;
+            default:
+                $query->latest();
+                break;
+        }
+
+        $productos = $query->get();
+        $categorias = Categoria::all();
+
+        return view('productos', compact('productos', 'categorias'));
+    }
+}
