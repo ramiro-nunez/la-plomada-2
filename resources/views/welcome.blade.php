@@ -2,15 +2,16 @@
 
 @section('title', 'Inicio')
 @section('content')
-    <!-- Cuando inicia sesión muestra un msj de alerta guardado en status -->
-    @if (session('status'))
-    <div class="container mt-3">
-        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
-            <i class="bi bi-check-circle-fill me-2"></i> {{ session('status') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+@if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show shadow-sm">
+        <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
     </div>
-    @endif
+@endif
+@if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show shadow-sm">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ session('error') }}
+    </div>
+@endif
     <!-- Carrousel de bienvenida -->
     <div id="carouselBienvenida" class="carousel slide mx-auto" data-bs-ride="carousel" data-bs-interval="4000">
     <div class="carousel-inner text-center">

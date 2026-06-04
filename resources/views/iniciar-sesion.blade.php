@@ -1,6 +1,7 @@
 @extends('app') <!-- Lo siguiente se extiende del padre app -->
 
 @section('title', 'Iniciar-Sesion')
+
 @section('content')
 <div class="container my-4">
   <div class="row justify-content-center">
@@ -8,7 +9,7 @@
       <div class="card shadow-lg bg">
         <h3 class="mx-4 mt-3">Iniciar Sesión</h3>
         <div class="m-3">
-          <form action="{{ url('iniciar-sesion') }}" method='POST'>
+          <form action="{{ url('login') }}" method='POST'>
           @csrf <!-- Genera un token que es solicitado por Laravel 
             buscando evitar ataques maliciosos -->
             <div>

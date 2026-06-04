@@ -63,12 +63,12 @@ h2 {
         ),
         url("../img/bkg-img3.jpg");
     /* Técnica de fijado */
-    background-attachment: fixed; /* La imagen no se mueve al hacer scroll */
-    background-position: center; /* Siempre centrada */
+    background-attachment: fixed;  /*La imagen no se mueve al hacer scroll */
+    background-position: center;  /*Siempre centrada */
     background-repeat: no-repeat;
-    background-size: cover; /* Se estira para cubrir todo el ancho/alto */
+    background-size: cover;  /*Se estira para cubrir todo el ancho/alto */
 
-    /* Color de fondo de respaldo por si la imagen tarda en cargar */
+    /* Color de fondo de respaldo por si la imagen tarda en cargar  */
     background-color: #1a1a1a;
 }
 

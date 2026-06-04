@@ -2,7 +2,7 @@
     y dónde se incluyen los componentes parciales que son
     iguales para todas las rutas. Será como el "padre" del 
     del cual se extiendan las demas vistas.
- -->
+-->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -21,10 +21,7 @@
 <body class="d-flex flex-column min-vh-100">
 
   @include('partials.navbar') <!-- Incluye el componente armado navbar -->
-
   <main class="flex-grow-1 fondo" >
-    <!-- Es como un campo vacío donde se renderizaran
-      los componentes segun las rutas -->
     @yield('content') 
     
   </main>

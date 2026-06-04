@@ -21,6 +21,6 @@ class IsAdminMiddleware
             return $next($request);
         }
         
-        abort(403, 'Acceso denegado. Se requieren permisos de administrador.');
+        return redirect('/')->with('error', 'Acceso denegado. Se requieren permisos de administrador.');
     }
 }

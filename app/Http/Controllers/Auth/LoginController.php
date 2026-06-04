@@ -26,20 +26,21 @@ class LoginController extends Controller
     {
         // Auth::attempt busca el email y compara el hash del password automáticamente
         if (! Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
-            
             // Si falla, lanzamos una excepción de validación que Laravel captura 
             //y devuelve automáticamente a la vista con los errores.
             throw ValidationException::withMessages([
                 'email' => 'Las credenciales proporcionadas no coinciden con nuestros registros.',
             ]);
         }
-
-        // BUENA PRÁCTICA DE SEGURIDAD: Regenerar la sesión previene ataques de fijación de sesión (Session Fixation)
         $request->session()->regenerate();
         
+        if (Auth::user()->role === 'admin') {
+        // Redirige al panel de administrador
+        return redirect()->intended('/panel-control')->with('success', 'Has iniciado sesión correctamente.'); 
+        }
         // redirect()->intended() redirige al usuario a la URL que intentaba acceder 
         // antes de ser forzado a loguearse, o al home ('/') por defecto.
-        return redirect()->intended();
+        return redirect()->intended('/')->with('success', 'Has iniciado sesión correctamente.');
     }
     
     /**

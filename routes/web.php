@@ -37,8 +37,8 @@ Route::middleware('guest')->group(function () {
 
 // Rutas para usuarios anónimos
 Route::middleware('guest')->group(function () {
-    Route::get('/iniciar-sesion', [LoginController::class, 'create'])->name('iniciar-sesion');
-    Route::post('/iniciar-sesion', [LoginController::class, 'store'])->name('iniciar-sesion.store');
+    Route::get('/login', [LoginController::class, 'create'])->name('login');
+    Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 });
 
 // Rutas para usuarios autenticados
@@ -48,8 +48,11 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', IsAdminMiddleware::class])->group(function () {
-    Route::get('/panel-control', [AdminController::class, 'panel']);
-    Route::get('/crear-articulo', [AdminController::class, 'crear']);
+    Route::get('/panel-control', [VariantController::class, 'index'])->name('variantes.index');
+    Route::put('/panel-control/{id}', [VariantController::class, 'update'])->name('variantes.update');
+    Route::delete('/panel-control/{id}', [VariantController::class, 'destroy'])->name('variantes.destroy');
+    //Rutas para crear categorias, productos y variantes
+    Route::get('/crear-categoria', [CategoryController::class, 'create'])->name('categorias.create');
+    Route::get('/crear-producto', [ProductController::class, 'create'])->name('productos.create');
+    Route::get('/crear-variante', [VariantController::class, 'create'])->name('variantes.create');
 });
-
-Route::get('/panel-control', [ProductController::class, 'index'])->name('productos.index');
