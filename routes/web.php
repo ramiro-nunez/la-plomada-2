@@ -34,6 +34,8 @@ Route::middleware('auth')->group(function () {
 Route::get('/catalogo', [CatalogController::class, 'index'])->name('catalog.index');
 require __DIR__.'/auth.php';
 
+// Ruta para ver el detalle de un producto específico
+Route::get('/catalogo/producto/{id}', [CatalogController::class, 'show'])->name('detalle');
 
 
 // FALTA AGREGAR ESTA LÍNEA para PROCESAR el formulario (POST)

@@ -23,8 +23,9 @@ class Producto extends Model
     }
 
     // Un producto tiene muchas variantes
-    public function variantes(): HasMany
+    public function var_productos(): HasMany
     {
         return $this->hasMany(Var_producto::class, 'id_producto', 'id');
     }
+
 }

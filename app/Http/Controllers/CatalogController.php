@@ -43,4 +43,14 @@ class CatalogController extends Controller
 
         return view('productos', compact('productos', 'categorias'));
     }
+    /**
+     * Muestra el detalle de un producto específico con sus variantes.
+     */
+    public function show($id)
+    {
+        // Buscamos el producto con sus relaciones o tira error 404 si no existe
+        $producto = Producto::with(['categoria', 'var_productos'])->findOrFail($id);
+
+        return view('detalle', compact('producto'));
+    }
 }

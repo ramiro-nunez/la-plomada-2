@@ -75,7 +75,7 @@
                     </div>
 
                     <div class="product-action mt-auto">
-                        <a href="#" class="btn btn-sm btn-dark w-100 fw-semibold py-2">
+                        <a href="{{ route('detalle', $producto->id) }}" class="btn btn-sm btn-dark w-100 fw-semibold py-2">
                             <i class="bi bi-eye-fill me-1"></i> Ver detalles
                         </a>
                     </div>
