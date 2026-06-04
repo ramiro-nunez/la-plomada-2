@@ -14,8 +14,8 @@ class CatalogController extends Controller
         $orden = $request->input('orden');
 
         // Iniciamos consulta mapeando tus relaciones en español
-        $query = Producto::with('categoria', 'variantes')
-            ->withMin('variantes', 'precio'); // Genera la columna 'variantes_min_precio'
+        $query = Producto::with('categoria', 'var_productos')
+            ->withMin('var_productos', 'precio'); // Genera la columna 'var_productos_min_precio'
 
         // Filtro por categoría
         if ($categoriaId) {
@@ -25,10 +25,10 @@ class CatalogController extends Controller
         // Ordenamiento por el alias que genera withMin
         switch ($orden) {
             case 'precio_asc':
-                $query->orderBy('variantes_min_precio', 'asc');
+                $query->orderBy('var_productos_min_precio', 'asc');
                 break;
             case 'precio_desc':
-                $query->orderBy('variantes_min_precio', 'desc');
+                $query->orderBy('var_productos_min_precio', 'desc');
                 break;
             case 'alfabetico_asc':
                 $query->orderBy('nombre', 'asc');

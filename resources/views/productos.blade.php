@@ -54,8 +54,8 @@
                 <div class="border text-center product-card bg-white h-100 d-flex flex-column p-1 justify-content-between rounded shadow-sm">
                     
                     <div class="mb-2 overflow-hidden product-img">
-                        @if($producto->variantes->first() && $producto->variantes->first()->url_img)
-                            <img src="{{ asset('img/catalogo/' . $producto->variantes->first()->url_img) }}" class="w-100 h-100 img-catalogo" alt="{{ $producto->nombre }}">
+                        @if($producto->var_productos->first() && $producto->var_productos->first()->url_img)
+                            <img src="{{ asset('img/catalogo/' . $producto->var_productos->first()->url_img) }}" class="w-100 h-100 img-catalogo" alt="{{ $producto->nombre }}">
                         @else
                             <img src="{{ asset('img/catalogo/cana2.jpg') }}" class="w-100 h-100 img-catalogo" alt="{{ $producto->nombre }}">
                         @endif
@@ -69,7 +69,7 @@
                         <div class="mt-1">
                             <span class="text-muted x-small d-block lh-1">Desde</span>
                             <h4 class="text-success fs-5 fw-bold mb-0">
-                                ${{ number_format($producto->variantes_min_precio, 0, ',', '.') }}
+                                ${{ number_format($producto->var_productos_min_precio, 0, ',', '.') }}
                             </h4>
                         </div>
                     </div>

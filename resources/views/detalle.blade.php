@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container py-5">
-    <a href="{{ route('catalog.index') }}" class="btn btn-outline-secondary mb-4 btn-sm">
+    <a href="{{ route('catalog.index') }}" class="btn btn-secondary mb-4 btn-sm">
         <i class="bi bi-arrow-left"></i> Volver al catálogo
     </a>
 
