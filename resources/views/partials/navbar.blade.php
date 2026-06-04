@@ -4,7 +4,7 @@
       <!-- request()->is('/') ? pregunta si la si es la ruta raiz para incluir
         la clase nav-active que señala con un estilo distinto en que sección se
         encuentra el usuario -->
-      <a class="navbar-brand mb-1  {{ request()->is('/') ? 'nav-active' : ''}}" href="/">La plomada</a>
+      <a class="navbar-brand mb-1 nav-active" href="/">La plomada</a>
       <button class="navbar-toggler position-absolute end-0" data-as-theme="white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
       </button>
@@ -20,7 +20,7 @@
           
           <!-- Se utiliza el helper global sesion para detectar si hay un usario
               logueado con email y mostrar un boton u otro dependiendo de eso. -->
-              @auth
+          @auth          
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Mi Cuenta
@@ -41,6 +41,9 @@
               </li>
             </ul>
           </li>
+          <a class="nav-link mx-2" href="#">
+              <i class="bi bi-cart3 fs-5"></i>
+          </a>
         @else
           <li class="nav-item">
             <a class="nav-link text-warning" href="{{ route('login') }}">
