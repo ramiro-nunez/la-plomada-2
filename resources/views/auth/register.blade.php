@@ -81,7 +81,7 @@
             @enderror
                 
             
-            <span>¿Ya posee una cuenta?</span><a class="btn btn-info m-2" href="/iniciar-sesion">Iniciar sesión</a>
+            <span>¿Ya posee una cuenta?</span><a class="btn btn-info m-2" href="/login">Iniciar sesión</a>
             
             <div class="row m-1 ">
               <button type="submit" class="btn btn-success mt-3 mx-auto">Registrarse</button>

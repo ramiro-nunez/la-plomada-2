@@ -41,7 +41,7 @@
                     {{ $message }}
                 </div>
             @enderror
-            <span>¿No posee una cuenta?</span><a class="btn btn-info m-2" href="/registrarse">Registrese</a>
+            <span>¿No posee una cuenta?</span><a class="btn btn-info m-2" href="/register">Registrese</a>
             <div class="row m-1 ">
               <button class="btn btn-success mt-3 mx-auto">Ingresar</button>
               <a class="btn btn-danger mt-2 mx-auto" href='/'>Cancelar</a>
