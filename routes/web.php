@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CatalogController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContactoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,3 +33,8 @@ Route::middleware('auth')->group(function () {
 });
 Route::get('/catalogo', [CatalogController::class, 'index'])->name('catalog.index');
 require __DIR__.'/auth.php';
+
+
+
+// FALTA AGREGAR ESTA LÍNEA para PROCESAR el formulario (POST)
+Route::post('/contactanos', [ContactoController::class, 'procesar'])->name('contacto.procesar');
