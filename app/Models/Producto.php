@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['id_categoria', 'nombre'])]
+#[Fillable(['id_categoria', 'name'])]
 class Producto extends Model
 {
     use HasFactory, SoftDeletes;

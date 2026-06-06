@@ -48,11 +48,20 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', IsAdminMiddleware::class])->group(function () {
-    Route::get('/panel-control', [VariantController::class, 'index'])->name('variantes.index');
-    Route::put('/panel-control/{id}', [VariantController::class, 'update'])->name('variantes.update');
-    Route::delete('/panel-control/{id}', [VariantController::class, 'destroy'])->name('variantes.destroy');
+    Route::get('/panel-control', [AdminController::class, 'panel'])->name('usuarios.index');
+    Route::put('/panel-control/{id}', [AdminController::class, 'update'])->name('usuarios.update');
+    Route::delete('/panel-control/{id}', [AdminController::class, 'destroy'])->name('usuarios.destroy');
     //Rutas para crear categorias, productos y variantes
     Route::get('/crear-categoria', [CategoryController::class, 'create'])->name('categorias.create');
+    Route::post('/crear-categoria', [CategoryController::class, 'store'])->name('categorias.store');
+    
     Route::get('/crear-producto', [ProductController::class, 'create'])->name('productos.create');
+    Route::post('/crear-producto', [ProductController::class, 'store'])->name('productos.store');
+    
     Route::get('/crear-variante', [VariantController::class, 'create'])->name('variantes.create');
+    Route::post('/crear-variante', [VariantController::class, 'store'])->name('variantes.store');
+    Route::delete('/crear-variante/{id}', [VariantController::class, 'destroy'])->name('variantes.destroy');
+
+    Route::get('/editar-variante/{id}', [VariantController::class, 'editar'])->name('variantes.editar');
+    Route::put('/editar-variante/{id}', [VariantController::class, 'update'])->name('variantes.update');
 });

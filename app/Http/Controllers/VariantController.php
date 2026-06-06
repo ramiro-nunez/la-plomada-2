@@ -4,35 +4,59 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Var_producto;
+use App\Models\Producto;
 
 class VariantController extends Controller
 {
     public function create(Request $request) { 
         
-        return view('crear-variante');
+        // Traemos los productos de la DB, paginados de a 12 por página.
+        // Opcional: puedes agregar un where() si solo quieres mostrar productos con stock.
+        $productos = Producto::paginate(12);
+        $variantes = Var_producto::paginate(12);
+        
+        // Retornamos la vista y le pasamos la variable $variantes
+        // usando compact() para que Blade pueda leerla.
+        return view('crear-variante', compact('variantes', 'productos'));
     }
     
     public function store(Request $request) { 
+
+        $request->validate([
+            'descripcion' => 'required|string|max:255',
+            'precio' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'url_img' => 'required|image|mimes:jpeg,jpg|max:2048', // máx 2MB
+        ]);
         
         $var_producto = Var_producto::create([
+            'id_producto' => $request->id_producto,
             'descripcion' => $request->descripcion,
             'precio' => $request->precio,
             'stock' => $request->stock,
         ]);
-        return redirect('/panel-control')->with('success', 'Variante de producto creada exitosamente!');
+        
+        if ($request->hasFile('url_img')) {
+        
+        // La magia de Laravel: toma el archivo, lo renombra con un ID único hashes 
+        // para evitar colisiones de nombres y lo guarda en storage/app/public/productos
+        $path = $request->file('url_img')->store('productos', 'public');
+        
+        // $path ahora contiene un string automático como: "productos/abc123xyz.jpg"
+        $var_producto->url_img = $path; 
+        $var_producto->save();
+        }
+        
+        return redirect('/crear-variante')->with('success', 'Variante de producto creada exitosamente!');
     }
 
-    public function index()
-    {
-        // Traemos los productos de la DB, paginados de a 12 por página.
-        // Opcional: puedes agregar un where() si solo quieres mostrar productos con stock.
-        $var_productos = Var_producto::paginate(12);
-        
-        // Retornamos la vista y le pasamos la variable $var_productos
-        // usando compact() para que Blade pueda leerla.
-        return view('panel-control', compact('var_productos'));
+    public function editar(Request $request, $id) { 
+
+        $var_producto = Var_producto::findOrFail($id);
+
+        return view('editar-variante', compact('var_producto'));
     }
-    
+
     public function update(Request $request, $id)
     {
     // 1. Buscamos el producto en la DB (si no existe, lanza error 404 automático)
@@ -49,7 +73,7 @@ class VariantController extends Controller
     $var_producto->update($datosValidados);
     
     // 4. Redirigimos de vuelta a la tabla con un mensaje de éxito
-    return redirect()->back()->with('success', 'Producto actualizado correctamente.');
+    return redirect('/crear-variante')->with('success', 'Producto actualizado correctamente.');
     }
     
     public function destroy($id)
@@ -61,6 +85,6 @@ class VariantController extends Controller
         $var_producto->delete();
         
         // 3. Recargamos la página enviando el mensaje flash a la sesión
-        return redirect()->back()->with('success', 'El artículo fue eliminado de forma permanente.');
+        return redirect('/crear-variante')->with('success', 'El artículo fue eliminado de forma permanente.');
     }
 }
