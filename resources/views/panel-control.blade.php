@@ -55,39 +55,6 @@
                                     </form>
                                 </td>
                             </tr>
-                            <!-- Modal de edición para cada producto -->
-                            <div class="modal fade" id="modalEditar{{ $usuario->id }}" tabindex="-1" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Editar: {{ $usuario->name }}</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form action="{{ route('usuarios.update', $usuario->id) }}" method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="descripcion">Nombre del artículo</label>
-                                                    <input type="text" class="form-control" id="descripcion" name="descripcion" value="{{ $usuario->name }}">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="precio">Precio</label>
-                                                    <input type="number" class="form-control" id="precio" name="precio" value="{{ $usuario->name }}" step="0.01">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="stock">Stock</label>
-                                                    <input type="number" class="form-control" id="stock" name="stock" value="{{ $usuario->name }}">
-                                                </div>
-                                                <div class="modal-footer px-0 pb-0 border-0">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             @endforeach
                         </tbody>
                     </table>
