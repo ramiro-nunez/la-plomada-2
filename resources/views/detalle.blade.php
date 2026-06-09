@@ -75,7 +75,7 @@
 
                         @guest
                             <a href="{{ route('login') }}" class="btn btn-warning btn-lg w-100 fw-bold py-3 text-dark shadow-sm">
-                                <i class="bi bi-box-arrow-in-right me-2"></i> Iniciá sesión para comprar
+                                <i class="bi bi-box-arrow-in-right me-2"></i> Iniciá sesión
                             </a>
                         @endguest
                     </div>
