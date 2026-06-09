@@ -84,6 +84,7 @@ class LoginRequest extends FormRequest
         return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
     }
 }
+<<<<<<< HEAD
 
 <?php
 
@@ -115,3 +116,5 @@ class LoginRequest extends FormRequest
         ];
     }
 }
+=======
+>>>>>>> a2fb524bb4ea3614fbad0094464ccc23b91d8e95

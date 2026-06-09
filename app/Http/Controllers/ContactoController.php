@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Contacto; 
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 
 class ContactoController extends Controller
@@ -14,9 +15,23 @@ class ContactoController extends Controller
      * @return View 'exito-contacto'
      */
     public function procesar(Request $request) { 
-        $nombre = $request->input('nombre'); 
-        $email = $request->input('email'); 
-        
-        return view('exito-contacto', [ 'nombre' => $nombre, 'email' => $email ]);
+        // 1. Validamos los datos que entran del formulario
+        $datosValidados = $request->validate([
+            'nombre'   => 'required|string|max:255',
+            'apellido'   => 'required|string|max:255',
+            'email'    => 'required|email|max:255',
+            'telefono' => 'nullable|numeric',
+            'asunto'   => 'required|string|max:255',
+            'mensaje'  => 'required|string',
+        ]);
+
+        // 2. Guardamos la consulta en la tabla 'contactos'
+        Contacto::create($datosValidados);
+
+        // 3. Mantenemos tu lógica de retornar la vista de éxito con los datos
+        return view('exito-contacto', [ 
+            'nombre' => $datosValidados['nombre'], 
+            'email'  => $datosValidados['email'] 
+        ]);
     }
 }

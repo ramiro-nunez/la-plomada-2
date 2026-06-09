@@ -21,13 +21,21 @@
 .nav-link {
     color: #ffffff;
     font-weight: 500;
-    transition: color 0.3s ease;
-    transition: transform 0.2s ease-in-out;
+    transition:
+        color 0.3s ease,
+        transform 0.2s ease-in-out;
 }
 
 .nav-link:hover {
     color: #ff9900;
     transform: translateY(-2px);
+}
+
+.navbar-nav .dropdown.show .nav-link,
+.navbar-nav .nav-link:focus,
+.navbar-nav .nav-link:active {
+    color: #ff9900;
+    background: transparent;
 }
 
 .navbar-toggler-icon {

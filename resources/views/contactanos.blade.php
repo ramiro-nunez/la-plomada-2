@@ -49,45 +49,92 @@
     <section class="pb-5">
         <div class="container">
             <div class="row g-5">
-                <div class="col-lg-7">
-                    <div class="bg-white rounded-4 shadow p-4 p-md-5">
-                        <h3 class="fw-bold mb-4">Envíanos un Mensaje</h3>
-                        <form action="{{ url('/contactanos') }}" method="POST">
-                            @csrf  <!-- Genera un token que es solicitado por Laravel 
-                             buscando evitar ataques maliciosos -->
-                            <div class="mb-3">
-                                <label for="nombre" class="form-label fw-semibold">Nombre Completo *</label>
-                                <input id="nombre" name="nombre" class="form-control" type="text" placeholder="Ingresa tu nombre" required>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="email" class="form-label fw-semibold">Email *</label>
-                                    <input id="email" name="email" class="form-control" type="email" placeholder="ejemplo@gmail.com" required>
+            <div class="col-lg-7">
+            <div class="bg-white rounded-4 shadow p-4 p-md-5">
+                <h3 class="fw-bold mb-4">Envíanos un Mensaje</h3>
+                <form action="{{ url('/contactanos') }}" method="POST">
+                    @csrf  @auth
+                        <p class="text-muted mb-4">
+                            Estás navegando como <strong class="text-dark">{{ auth()->user()->name }} {{ auth()->user()->apellido }}</strong> ({{ auth()->user()->email }}).
+                        </p>
+
+                        <input type="hidden" name="nombre" value="{{ auth()->user()->name }}">
+                        <input type="hidden" name="apellido" value="{{ auth()->user()->apellido }}">
+                        <input type="hidden" name="email" value="{{ auth()->user()->email }}">
+
+                        <div class="col-md-6 mb-3">
+                            <label for="telefono" class="form-label fw-semibold">Teléfono</label>
+                            <input type="number" 
+                                id="telefono" 
+                                name="telefono" 
+                                class="form-control @error('telefono') is-invalid @enderror" 
+                                value="{{ old('telefono') }}"
+                                pattern="[0-9]*" 
+                                placeholder="Ej: 3794123456 (Solo números)">
+                            
+                            @error('telefono')
+                                <div class="invalid-feedback">
+                                    El teléfono debe contener solo números, sin espacios ni signos.
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="telefono" class="form-label fw-semibold">Teléfono</label>
-                                    <input type="tel" id="telefono" class="form-control" placeholder="+54 379...">
-                                </div>
+                            @enderror
+                        </div>
+                    @endauth
+
+                    @guest
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label fw-semibold">Nombre *</label>
+                            <input id="nombre" name="nombre" class="form-control" type="text" placeholder="Ingresa tu nombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="apellido" class="form-label fw-semibold">Apellido *</label>
+                            <input id="apellido" name="apellido" class="form-control" type="text" placeholder="Ingresa tu apellido" required>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label fw-semibold">Email *</label>
+                                <input id="email" name="email" class="form-control" type="email" placeholder="ejemplo@gmail.com" required>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label fw-semibold">Asunto *</label>
-                                <select class="form-select" required>
-                                    <option value="">Selecciona una opción</option>
-                                    <option value="1">Consulta sobre productos</option>
-                                    <option value="2">Seguimiento de pedido</option>
-                                    <option value="3">Otros</option>
-                                </select>
+                            <div class="col-md-6 mb-3">
+                                <label for="telefono" class="form-label fw-semibold">Teléfono</label>
+                                <input type="number" 
+                                    id="telefono" 
+                                    name="telefono" 
+                                    class="form-control @error('telefono') is-invalid @enderror" 
+                                    value="{{ old('telefono') }}"
+                                    pattern="[0-9]*" 
+                                    placeholder="Ej: 3794123456 (Solo números)">
+                                
+                                @error('telefono')
+                                    <div class="invalid-feedback">
+                                        El teléfono debe contener solo números, sin espacios ni signos.
+                                    </div>
+                                @enderror
                             </div>
-                            <div class="mb-4">
-                                <label class="form-label fw-semibold">Mensaje *</label>
-                                <textarea class="form-control" rows="5" placeholder="¿En qué podemos ayudarte?" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-success btn-lg w-100 fw-bold py-3 shadow-sm">
-                                <i class="bi bi-send me-2"></i> Enviar Mensaje
-                            </button>
-                        </form>
+                        </div>
+                    @endguest
+
+                    <div class="mb-3">
+                        <label for="asunto" class="form-label fw-semibold">Asunto *</label>
+                        <select id="asunto" name="asunto" class="form-select" required>
+                            <option value="">Selecciona una opción</option>
+                            <option value="Consulta sobre productos">Consulta sobre productos</option>
+                            <option value="Seguimiento de pedido">Seguimiento de pedido</option>
+                            <option value="Otros">Otros</option>
+                        </select>
                     </div>
-                </div>
+                    
+                    <div class="mb-4">
+                        <label for="mensaje" class="form-label fw-semibold">Mensaje *</label>
+                        <textarea id="mensaje" name="mensaje" class="form-control" rows="5" placeholder="¿En qué podemos ayudarte?" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success btn-lg w-100 fw-bold py-3 shadow-sm">
+                        <i class="bi bi-send me-2"></i> Enviar Mensaje
+                    </button>
+                </form>
+            </div>
+        </div>
 
                 <div class="col-lg-5">
                     <h2 class="fw-bold mb-4">Preguntas Frecuentes</h2>

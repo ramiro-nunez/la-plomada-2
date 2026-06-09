@@ -14,11 +14,11 @@ class Var_producto extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'producto_vars';
+    protected $table = 'var_productos';
 
     // Cada variante pertenece a un producto
     public function producto(): BelongsTo
     {
-        return $this->belongsTo(Producto::class, 'id_producto');
+        return $this->belongsTo(Producto::class, 'id_producto', 'id');
     }
 }

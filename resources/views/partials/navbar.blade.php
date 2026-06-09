@@ -21,17 +21,33 @@
           <!-- Se utiliza el helper global sesion para detectar si hay un usario
               logueado con email y mostrar un boton u otro dependiendo de eso. -->
               @auth
-          <form method="POST" action="{{ route('logout') }}" class="d-inline">
-              @csrf
-              <a class="nav-link text-danger" href="javascript:void(0)" onclick="event.preventDefault(); this.closest('form').submit();">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Mi Cuenta
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Mis compras</a></li>
+              <li><a class="dropdown-item" href="/profile">Editar perfil</a></li>
+              
+              <li><hr class="dropdown-divider"></li>
+              
+              <li>
+                <form method="POST" action="{{ route('logout') }}" id="logout-form" class="d-none">
+                  @csrf
+                </form>
+                <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                   <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
-              </a>
-          </form>
-            @else
-          <a class="nav-link text-warning" href="{{ route('login') }}">
+                </a>
+              </li>
+            </ul>
+          </li>
+        @else
+          <li class="nav-item">
+            <a class="nav-link text-warning" href="{{ route('login') }}">
               <i class="bi bi-person-lock"></i> Iniciar Sesión
-          </a>
-            @endauth
+            </a>
+          </li>
+        @endauth
         </div>
       </div>
   </div>

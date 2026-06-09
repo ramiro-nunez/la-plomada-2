@@ -2,13 +2,6 @@
 
 namespace App\Models;
 
-<<<<<<< HEAD
-use Illuminate\Database\Eloquent\Model;
-
-class Producto extends Model
-{
-    //
-=======
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -26,13 +19,13 @@ class Producto extends Model
     // Un producto pertenece a una categoría
     public function categoria(): BelongsTo
     {
-        return $this->belongsTo(Categoria::class, 'id_categoria');
+        return $this->belongsTo(Categoria::class, 'id_categoria', 'id');
     }
 
     // Un producto tiene muchas variantes
-    public function variantes(): HasMany
+    public function var_productos(): HasMany
     {
-        return $this->hasMany(Var_producto::class, 'id_producto');
+        return $this->hasMany(Var_producto::class, 'id_producto', 'id');
     }
->>>>>>> 5a42a80745bb420e6ec222ea2ab99d2342ca957e
+
 }
