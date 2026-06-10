@@ -7,6 +7,9 @@ use App\Http\Controllers\ContactoController;
 
 use App\Http\Middleware\IsAdminMiddleware;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\VariantController;
 
 Route::get('/', function () {
     return view('welcome');
