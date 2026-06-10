@@ -28,7 +28,8 @@
                         <thead class="table-warning">
                             <tr>
                                 <th class="py-3 border-bottom-2">Ícono</th>
-                                <th class="py-3 border-bottom-2">Nombre</th>
+                                <th class="d-none d-md-table-cell py-3 border-bottom-2">Nombre</th>
+                                <th class="d-none d-md-table-cell py-3 border-bottom-2">Apellido</th>
                                 <th class="d-none d-md-table-cell py-3 border-bottom-2">Costo</th>
                                 <th class="d-none d-md-table-cell py-3 border-bottom-2">Rol</th>
                                 <th class="d-none d-md-table-cell py-3 border-bottom-2">Cambiar Rol</th>
@@ -37,19 +38,20 @@
                         <tbody class="text-secondary text-nowrap ">
                             @foreach($usuarios as $usuario)
                             <tr>
-                                <td class="py-3">{{ $usuario->name }}</td>
-                                <td class="d-none d-md-table-cell py-3">{{ $usuario->lastname }}</td>
+                                <td class="py-3"><img src="{{ asset('storage/' . $usuario->url_img) }}"  style="width: 60px; height: 60px; object-fit: cover;"></td>
+                                <td class="d-none d-md-table-cell py-3">{{ $usuario->name }}</td>
+                                <td class="d-none d-md-table-cell py-3">{{ $usuario->apellido }}</td>
                                 <td class="d-none d-md-table-cell py-3">{{ $usuario->email }}</td>
-                                <td class="d-none d-md-table-cell py-3">{{ $usuario->role }}</td>
+                                <td class="d-none d-md-table-cell py-3">{{ $usuario->rol }}</td>
                                 <td class="d-none d-md-table-cell py-3">
                                     <!-- Accion directa de cambio de Rol de Usuario -->
                                     <form action="{{ route('usuarios.update', $usuario->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <select class="form-select form-control" id="role" name="role" required>
+                                        <select class="form-select form-control" id="rol" name="rol" required>
                                             <option value="" disabled selected>Seleccionar</option>
                                             <option value="admin">admin</option>
-                                            <option value="customer">customer</option>
+                                            <option value="cliente">cliente</option>
                                         </select>
                                         <button type="submit" class="btn btn-warning">Cambiar Rol</button>
                                     </form>

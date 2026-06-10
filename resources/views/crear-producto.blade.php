@@ -40,7 +40,7 @@
                         <tbody>
                             @foreach($productos as $producto)
                             <tr class="text-center">
-                                <td class="py-3 px-2">{{ $producto->name }}</td>
+                                <td class="py-3 px-2">{{ $producto->nombre }}</td>
                             </tr>
                             @endforeach
                         </tbody>
