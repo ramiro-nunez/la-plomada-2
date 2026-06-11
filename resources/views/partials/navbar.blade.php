@@ -47,7 +47,7 @@
                 </li>
               </ul>
             </li>
-            <a class="nav-link mx-2" href="#">
+            <a class="nav-link mx-2" href="/carrito">
                 <i class="bi bi-cart3 fs-5"></i>
             </a>        
             @endif

@@ -10,6 +10,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\VariantController;
+use App\Http\Controllers\CarritoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,6 +31,11 @@ Route::get('/comercio', function () {
 Route::get('/terms', function () {
     return view('terminos');
 });
+
+
+Route::get('/carrito', [CarritoController::class, 'ver'])->name('carrito.ver');
+
+
 Route::get('/productos', [CatalogController::class, 'index']);
 
 Route::middleware('auth')->group(function () {
@@ -69,3 +75,4 @@ Route::post('/contactanos', [ContactoController::class, 'procesar'])->name('cont
     Route::put('/editar-variante/{id}', [VariantController::class, 'update'])->name('variantes.update');
 });
 
+Route::post('/detalle', [CarritoController::class, 'agregarProducto'])->name('detalle.agregarProducto');

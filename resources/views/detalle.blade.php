@@ -41,12 +41,12 @@
 
             <hr class="text-muted my-4">
 
-            <form action="#" method="POST" id="cart-form">
+            <form action="{{ url('/detalle') }}" method="POST" id="cart-form">
                 @csrf
                 
                 <div class="mb-4">
-                    <label for="variant-select" class="form-label fw-bold text-dark">Seleccioná la Variedad *</label>
-                    <select id="variant-select" name="variante_id" class="form-select form-select-lg" required>
+                    <label for="variante_id" class="form-label fw-bold text-dark">Seleccioná la Variedad *</label>
+                    <select id="variante_id" name="var_productos_id" class="form-select form-select-lg" required>
                         @foreach($producto->var_productos as $index => $var)
                             <option value="{{ $var->id }}" 
                                     data-precio="{{ $var->precio }}" 
@@ -61,8 +61,8 @@
 
                 <div class="row g-3 align-items-end mb-4">
                     <div class="col-sm-4">
-                        <label for="quantity-input" class="form-label fw-bold text-dark">Cantidad</label>
-                        <input type="number" id="quantity-input" name="cantidad" class="form-control form-select-lg text-center" 
+                        <label for="cantidad" class="form-label fw-bold text-dark">Cantidad</label>
+                        <input type="number" id="cantidad" name="cantidad" class="form-control form-select-lg text-center" 
                                value="1" min="1" max="{{ $producto->var_productos->first()->stock ?? 1 }}" required>
                     </div>
                     
@@ -106,9 +106,6 @@
             const precio = parseFloat(selectedOption.getAttribute('data-precio'));
             const stock = parseInt(selectedOption.getAttribute('data-stock'));
             const img = selectedOption.getAttribute('data-img');
-
-            // CONTROL EN CONSOLA: Borrá esto cuando funcione, es para ver si JS responde al cambio
-            console.log("Variante cambiada. Precio:", precio, "Stock:", stock, "Imagen:", img);
 
             // 1. Actualizamos el precio formateado a pesos argentinos
             if (priceDisplay && !isNaN(precio)) {
