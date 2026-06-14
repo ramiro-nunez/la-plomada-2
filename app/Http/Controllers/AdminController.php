@@ -9,9 +9,9 @@ class AdminController extends Controller
 {
     public function panel(Request $request) { 
         
-        $usuarios = User::paginate(12);
+        $usuarios = User::all();
         
-        return view('panel-control', compact('usuarios'));
+        return view('usuarios', compact('usuarios'));
     }
 
     public function crear(Request $request) { 
@@ -35,6 +35,6 @@ class AdminController extends Controller
     $user->save();
 
     // 4. Redirigimos de vuelta a la tabla con un mensaje de éxito
-    return redirect('panel-control')->with('success', 'Rol actualizado correctamente.');
+    return redirect('usuarios')->with('success', 'Rol actualizado correctamente.');
     }
 }

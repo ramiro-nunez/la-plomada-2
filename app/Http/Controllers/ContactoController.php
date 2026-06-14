@@ -26,12 +26,26 @@ class ContactoController extends Controller
         ]);
 
         // 2. Guardamos la consulta en la tabla 'contactos'
-        Contacto::create($datosValidados);
-
+        $contacto = Contacto::create([
+            'nombre' => $request->nombre,
+            'apellido' => $request->apellido,
+            'email' => $request->email,
+            'telefono' => $request->telefono,
+            'asunto' => $request->asunto,
+            'mensaje' => $request->mensaje,
+        ]);
+        
         // 3. Mantenemos tu lógica de retornar la vista de éxito con los datos
         return view('exito-contacto', [ 
             'nombre' => $datosValidados['nombre'], 
-            'email'  => $datosValidados['email'] 
+            'email'  => $datosValidados['email'],
         ]);
+    }
+    
+    public function consultas(Request $request) { 
+        
+        $contactos = Contacto::all();
+        
+        return view('contacto', compact('contactos'));
     }
 }

@@ -10,7 +10,7 @@ class CategoryController extends Controller
     public function create(Request $request) { 
         // Traemos los productos de la DB, paginados de a 12 por página.
         // Opcional: puedes agregar un where() si solo quieres mostrar productos con stock.
-        $categorias = Categoria::paginate(12);
+        $categorias = Categoria::all();
         
         // Retornamos la vista y le pasamos la variable $var_productos
         // usando compact() para que Blade pueda leerla.

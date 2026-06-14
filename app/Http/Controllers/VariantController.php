@@ -12,8 +12,8 @@ class VariantController extends Controller
         
         // Traemos los productos de la DB, paginados de a 12 por página.
         // Opcional: puedes agregar un where() si solo quieres mostrar productos con stock.
-        $productos = Producto::paginate(12);
-        $variantes = Var_producto::paginate(12);
+        $productos = Producto::all();
+        $variantes = Var_producto::all();
         
         // Retornamos la vista y le pasamos la variable $variantes
         // usando compact() para que Blade pueda leerla.
@@ -62,13 +62,19 @@ class VariantController extends Controller
     // 1. Buscamos el producto en la DB (si no existe, lanza error 404 automático)
     $var_producto = Var_producto::findOrFail($id);
     
+    
+    
     // 2. Validamos los datos (lo ideal es usar un FormRequest, pero lo resumo aquí)
     $datosValidados = $request->validate([
         'descripcion' => 'required|string|max:255',
         'precio' => 'required|numeric|min:0',
         'stock' => 'required|integer|min:0',
+        'url_img' => 'required|image|mimes:jpeg,jpg|max:2048',
     ]);
     
+    $path = $request->file('url_img')->store('productos', 'public');
+    $datosValidados['url_img'] = $path; 
+
     // 3. Actualizamos la base de datos
     $var_producto->update($datosValidados);
     

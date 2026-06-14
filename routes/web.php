@@ -45,12 +45,16 @@ Route::get('/catalogo/producto/{id}', [CatalogController::class, 'show'])->name(
 
 
 // FALTA AGREGAR ESTA LÍNEA para PROCESAR el formulario (POST)
-Route::post('/contactanos', [ContactoController::class, 'procesar'])->name('contacto.procesar');
+Route::post('/contactanos', [ContactoController::class, 'procesar']);
 
 Route::middleware(['auth', IsAdminMiddleware::class])->group(function () {
-    Route::get('/panel-control', [AdminController::class, 'panel'])->name('usuarios.index');
-    Route::put('/panel-control/{id}', [AdminController::class, 'update'])->name('usuarios.update');
-    Route::delete('/panel-control/{id}', [AdminController::class, 'destroy'])->name('usuarios.destroy');
+    Route::get('/panel-control', function () { return view('panel-control');});
+    
+    Route::get('/consultas', [ContactoController::class, 'consultas']);
+    
+    Route::get('/usuarios', [AdminController::class, 'panel'])->name('login');
+    Route::put('/usuarios/{id}', [AdminController::class, 'update'])->name('usuarios.update');
+    Route::delete('/usuarios/{id}', [AdminController::class, 'destroy'])->name('usuarios.destroy');
     //Rutas para crear categorias, productos y variantes
     Route::get('/crear-categoria', [CategoryController::class, 'create'])->name('categorias.create');
     Route::post('/crear-categoria', [CategoryController::class, 'store'])->name('categorias.store');
@@ -62,8 +66,6 @@ Route::middleware(['auth', IsAdminMiddleware::class])->group(function () {
     Route::post('/crear-variante', [VariantController::class, 'store'])->name('variantes.store');
     Route::delete('/crear-variante/{id}', [VariantController::class, 'destroy'])->name('variantes.destroy');
 
-// FALTA AGREGAR ESTA LÍNEA para PROCESAR el formulario (POST)
-Route::post('/contactanos', [ContactoController::class, 'procesar'])->name('contacto.procesar');
 
     Route::get('/editar-variante/{id}', [VariantController::class, 'editar'])->name('variantes.editar');
     Route::put('/editar-variante/{id}', [VariantController::class, 'update'])->name('variantes.update');

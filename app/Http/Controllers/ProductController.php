@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     public function create(Request $request) { 
-        $categorias = Categoria::paginate(12);
-        $productos = Producto::paginate(12);
+        $categorias = Categoria::all();
+        $productos = Producto::all();
 
         // Retornamos la vista y le pasamos la variable $var_productos
         // usando compact() para que Blade pueda leerla.

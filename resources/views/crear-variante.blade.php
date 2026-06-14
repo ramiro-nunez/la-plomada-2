@@ -23,7 +23,7 @@
                         <div class="form-floating mb-3">
                             <select class="form-select" id="id_producto" name="id_producto" required>
                                 @foreach($productos as $producto)
-                                <option value="{{ $producto->id }}">{{ $producto->name }}</option>
+                                <option value="{{ $producto->id }}">{{ $producto->nombre }}</option>
                                 @endforeach
                             </select>
                             <label class="form-label mx-2" for="id_producto">Producto</label>

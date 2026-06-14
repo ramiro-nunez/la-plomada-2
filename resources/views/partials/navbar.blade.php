@@ -14,8 +14,13 @@
           @auth
             <!-- si esta autenticado y es admin -->
             @if(optional(Auth::user())->rol == 'admin')
+            <a class="nav-link {{ request()->is('consultas') ? 'nav-active' : ''}}" href="/consultas" ><i class="bi bi-envelope"></i> Consultas</a>
+            <a class="nav-link {{ request()->is('usuarios') ? 'nav-active' : ''}}" href="/usuarios" ><i class="bi bi-people"></i> Usuarios</a>
+            <a class="nav-link {{ request()->is('crear-categoria') ? 'nav-active' : ''}}" href="/crear-categoria" ><i class="bi bi-folder-plus"></i> Categorías</a>
+            <a class="nav-link {{ request()->is('crear-producto') ? 'nav-active' : ''}}" href="/crear-producto" ><i class="bi bi-cart-plus"></i> Productos</a>
+            <a class="nav-link {{ request()->is('crear-variante') ? 'nav-active' : ''}}" href="/crear-variante" ><i class="bi bi-shuffle"></i> Variantes</a>
               <a class="nav-link {{ request()->is('panel-control') ? 'nav-active' : ''}}" href="/panel-control"><i class="bi bi-gear"></i> Panel de Control</a>
-              <a class="nav-link {{ request()->is('productos') ? 'nav-active' : ''}}" href="/productos" >Catálogo</a>
+              <a class="nav-link {{ request()->is('productos') ? 'nav-active' : ''}}" href="/productos" ><i class="bi bi-card-list"></i> Catálogo</a>
               <form method="POST" action="{{ route('logout') }}" class="d-inline">
               @csrf
               <a class="nav-link text-danger" href="javascript:void(0)" onclick="event.preventDefault(); this.closest('form').submit();"><i class="bi bi-box-arrow-right"></i> Cerrar Sesión</a>
