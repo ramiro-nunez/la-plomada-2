@@ -15,13 +15,19 @@
     <div id="carouselBienvenida" class="carousel slide mx-auto" data-bs-ride="carousel" data-bs-interval="4000">
     <div class="carousel-inner text-center">
         <div class="carousel-item active">
-        <img src="{{ asset('img/banners/bann3.jpg') }}" class="d-block w-100" alt="Banner 1">
+            <a href="{{ route('catalog.index')}}">
+                <img src="{{ asset('img/banners/bann3.jpg') }}" class="d-block w-100" alt="Banner 1">
+            </a>
         </div>
         <div class="carousel-item">
-        <img src="{{ asset('img/banners/bann1.jpg') }}" class="d-block w-100" alt="Banner 2">
+            <a href="{{ route('catalog.index')}}">
+                <img src="{{ asset('img/banners/bann1.jpg') }}" class="d-block w-100" alt="Banner 2">
+            </a>
         </div>
         <div class="carousel-item">
-        <img src="{{ asset('img/banners/bann2.jpg') }}" class="d-block w-100" alt="Banner 3">
+            <a href="{{ route('catalog.index')}}">
+                <img src="{{ asset('img/banners/bann2.jpg') }}" class="d-block w-100" alt="Banner 3">
+            </a>
         </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselBienvenida" data-bs-slide="prev">
