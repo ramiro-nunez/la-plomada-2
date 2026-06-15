@@ -12,15 +12,14 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\VariantController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CompraController;
+use App\Http\Controllers\HomeController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 /* Rutas que solo renderizan vistas */
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index']);
 Route::get('/contactanos', function () {
     return view('contactanos');
 });

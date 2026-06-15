@@ -40,88 +40,76 @@
     </button>
     </div>
     <!-- Fin Carrousel -->
-    <!-- Productos Destacados -->
-    <h2 class="text-center subtitulo-seccion fw-bold py-4">Productos Destacados</h2>
-    <!-- Carrousel de Productos Destacados -->
-    <div id="carouselProductosDestacados" class="carousel slide mx-auto mb-3" data-bs-ride="carousel" data-bs-interval="4000" >
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-        <div class="row justify-content-center align-items-center g-4">
-                <!-- card articulo1 -->
-                <div class="col-sm-4">
-                    <div class="border text-center product-card">
-                        <div class=" mx-auto mb-1 overflow-hidden product-img">
-                            <img src="{{ asset('img/catalogo/wader.jpg') }}" class="w-100 h-100 ">
-                        </div>
-                        <h4 class=" text-success fs-6 fs-sm-3 fw-bold mb-0">$350.000</h4>
-                        <h5 class=" fw-semibold fs-6 fs-sm-3 mb-0 pb-2">Wader de Neoprene Waterdog (4mm)</h5>
-                    </div>
-                </div>
-                <!-- card articulo2 -->
-                <div class="col-sm-4">
-                    <div class="border text-center product-card">
-                        <div class="mx-auto mb-1 overflow-hidden product-img">
-                            <img src="{{ asset('img/catalogo/reel1.jpg') }}" class="w-100 h-100 ">
-                        </div>
-                        <h4 class="text-success fs-6 fs-sm-3 fw-bold mb-0">$85.000</h4>
-                        <h5 class="fw-semibold fs-6 fs-sm-3 mb-0 pb-2">Reel Frontal Daiwa Sweepfire 4000</h5>
-                    </div>
-                </div>
-                <!-- card articulo3 -->
-                <div class="col-sm-4">
-                    <div class="border text-center product-card ">
-                        <div class="mx-auto mb-1 overflow-hidden product-img">
-                            <img src="{{ asset('img/catalogo/cana1.jpg') }}" class="w-100 h-100 object-fit-cover">
-                        </div>
-                        <h4 class="text-success fs-6 fs-sm-3 fw-bold mb-0">$145.000</h4>
-                        <h5 class="fw-semibold fs-6 fs-sm-3 mb-0 pb-2">Caña Telescópica Shimano FX (3.00m)</h5>
-                    </div>
-                </div>  
-            </div>
-        </div>
-        <div class="carousel-item">
-        <div class="row justify-content-center align-items-center g-4">
-                <!-- card articulo4 -->
-                <div class="col-sm-4">
-                    <div class="border text-center product-card">
-                        <div class="mx-auto mb-1 overflow-hidden product-img">
-                            <img src="{{ asset('img/catalogo/caja.jpg') }}" class="w-100 h-100 ">
-                        </div>
-                        <h4 class="text-success fs-6 fs-sm-3 fw-bold mb-0">$65.000</h4>
-                        <h5 class="fw-semibold fs-6 fs-sm-3 mb-0 pb-2">Caja de Pesca Plano 3 Bandejas Articuladas</h5>
-                    </div>
-                </div>
-                <!-- card articulo5 -->
-                <div class="col-sm-4">
-                    <div class="border text-center product-card">
-                        <div class="mx-auto mb-1 overflow-hidden product-img">
-                            <img src="{{ asset('img/catalogo/señuelo1.jpg') }}" class="w-100 h-100 object-fit-cover">
-                        </div>
-                        <h4 class="text-success fs-6 fs-sm-3 fw-bold mb-0">$32.000</h4>
-                        <h5 class="fw-semibold fs-6 fs-sm-3 mb-0 pb-2">Señuelo Rapala Super Shad Rap (14cm)</h5>
-                    </div>
-                </div>
-                <!-- card articulo6 -->
-                <div class="col-sm-4">
-                    <div class="border text-center product-card">
-                        <div class="mx-auto mb-1 overflow-hidden product-img">
-                            <img src="{{ asset('img/catalogo/reel3.jpg') }}" class="w-100 h-100 ">
-                        </div>
-                        <h4 class="text-success fs-6 fs-sm-3 fw-bold mb-0">$280.000</h4>
-                        <h5 class="fw-semibold fs-6 fs-sm-3 mb-0 pb-2">Reel Rotativo Penn Squall Level Wind</h5>
-                    </div>
-                </div>  
-            </div>
-        </div>
+    <h2 class="text-center subtitulo-seccion fw-bold mt-5">Últimos Ingresos</h2>
+
+@if($productosNuevos->isEmpty())
+    <div class="text-center py-4">
+        <p class="text-muted">Próximamente novedades en equipamiento de pesca.</p>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselProductosDestacados" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselProductosDestacados" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
+@else
+    <div id="carouselProductosNuevos" class="carousel slide mx-auto mb-5" data-bs-ride="carousel" data-bs-interval="4000">
+        <div class="carousel-inner">
+            
+            {{-- Partimos los 6 productos en tandas de a 3 --}}
+            @foreach($productosNuevos->chunk(3) as $index => $tandaProductos)
+                
+                {{-- La primera tanda de 3 arranca con la clase 'active' --}}
+                <div class="carousel-item pb-4 {{ $index === 0 ? 'active' : '' }}">
+                    <div class="container">
+                        <div class="row justify-content-center align-items-stretch g-4">
+                            
+                            {{-- Iteramos los productos dentro de la tanda actual --}}
+                            @foreach($tandaProductos as $producto)
+                                <div class="col-md-4 col-sm-6 mb-2">
+                                    
+                                    <div class="border text-center product-card bg-white h-100 d-flex flex-column p-2 justify-content-between rounded shadow-sm">
+                                        
+                                        <div class="mb-2 overflow-hidden product-img">
+                                            @if($producto->var_productos->first() && $producto->var_productos->first()->url_img)
+                                                <img src="{{ asset('img/catalogo/' . $producto->var_productos->first()->url_img) }}" class="w-100 h-100 img-catalogo" alt="{{ $producto->nombre }}">
+                                            @else
+                                                <img src="{{ asset('img/catalogo/cana2.jpg') }}" class="w-100 h-100 img-catalogo" alt="{{ $producto->nombre }}" >
+                                            @endif
+                                        </div>
+
+                                        <div class="product-info flex-grow-1 d-flex flex-column justify-content-center mb-3">
+                                            <span class="text-uppercase text-muted x-small fw-bold mb-1">{{ $producto->categoria->nombre }}</span>
+                                            
+                                            <h5 class="fw-semibold fs-6 mb-1 text-dark">{{ $producto->nombre }}</h5>
+                                            
+                                            <div class="mt-1">
+                                                <span class="text-muted x-small d-block lh-1">Desde</span>
+                                                <h4 class="text-success fs-5 fw-bold mb-0">
+                                                    ${{ number_format($producto->var_productos_min_precio, 0, ',', '.') }}
+                                                </h4>
+                                            </div>
+                                        </div>
+
+                                        <div class="product-action mt-auto">
+                                            <a href="{{ route('detalle', $producto->id) }}" class="btn btn-sm btn-dark w-100 fw-semibold py-2">
+                                                <i class="bi bi-eye-fill me-1"></i> Ver detalles
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                    </div>
+                            @endforeach
+
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselProductosNuevos" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselProductosNuevos" data-bs-slide="next">
+            <span class="carousel-control-next-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
-    <!-- Fin Carrousel -->
+@endif
 @endsection
