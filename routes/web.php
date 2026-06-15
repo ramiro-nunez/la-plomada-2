@@ -5,6 +5,14 @@ use App\Http\Controllers\CatalogController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactoController;
 
+use App\Http\Middleware\IsAdminMiddleware;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\VariantController;
+use App\Http\Controllers\CarritoController;
+use App\Http\Controllers\CompraController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -27,6 +35,11 @@ Route::get('/comercio', function () {
 Route::get('/terms', function () {
     return view('terminos');
 });
+
+
+Route::get('/carrito', [CarritoController::class, 'ver'])->name('carrito.ver');
+
+
 Route::get('/productos', [CatalogController::class, 'index']);
 
 Route::middleware('auth')->group(function () {
@@ -43,3 +56,34 @@ Route::get('/catalogo/producto/{id}', [CatalogController::class, 'show'])->name(
 
 // FALTA AGREGAR ESTA LÍNEA para PROCESAR el formulario (POST)
 Route::post('/contactanos', [ContactoController::class, 'procesar'])->name('contacto.procesar');
+
+Route::middleware(['auth', IsAdminMiddleware::class])->group(function () {
+    Route::get('/panel-control', [AdminController::class, 'panel'])->name('usuarios.index');
+    Route::put('/panel-control/{id}', [AdminController::class, 'update'])->name('usuarios.update');
+    Route::delete('/panel-control/{id}', [AdminController::class, 'destroy'])->name('usuarios.destroy');
+    //Rutas para crear categorias, productos y variantes
+    Route::get('/crear-categoria', [CategoryController::class, 'create'])->name('categorias.create');
+    Route::post('/crear-categoria', [CategoryController::class, 'store'])->name('categorias.store');
+    
+    Route::get('/crear-producto', [ProductController::class, 'create'])->name('productos.create');
+    Route::post('/crear-producto', [ProductController::class, 'store'])->name('productos.store');
+    
+    Route::get('/crear-variante', [VariantController::class, 'create'])->name('variantes.create');
+    Route::post('/crear-variante', [VariantController::class, 'store'])->name('variantes.store');
+    Route::delete('/crear-variante/{id}', [VariantController::class, 'destroy'])->name('variantes.destroy');
+
+// FALTA AGREGAR ESTA LÍNEA para PROCESAR el formulario (POST)
+Route::post('/contactanos', [ContactoController::class, 'procesar'])->name('contacto.procesar');
+
+    Route::get('/editar-variante/{id}', [VariantController::class, 'editar'])->name('variantes.editar');
+    Route::put('/editar-variante/{id}', [VariantController::class, 'update'])->name('variantes.update');
+});
+
+Route::post('/detalle', [CarritoController::class, 'agregarProducto'])->name('detalle.agregarProducto');
+Route::get('/carrito/eliminar/{detalleId}', [CarritoController::class, 'eliminarProducto'])->name('carrito.eliminar');
+
+Route::post('/compra/confirmar', [App\Http\Controllers\CompraController::class, 'confirmar'])->name('compra.confirmar');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/mis-compras', [CompraController::class, 'historial'])->name('compras.historial');
+});

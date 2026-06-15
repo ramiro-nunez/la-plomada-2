@@ -41,12 +41,12 @@
 
             <hr class="text-muted my-4">
 
-            <form action="#" method="POST" id="cart-form">
+            <form action="{{ url('/detalle') }}" method="POST" id="cart-form">
                 @csrf
                 
                 <div class="mb-4">
-                    <label for="variant-select" class="form-label fw-bold text-dark">Seleccioná la Variedad *</label>
-                    <select id="variant-select" name="variante_id" class="form-select form-select-lg" required>
+                    <label for="variante_id" class="form-label fw-bold text-dark">Seleccioná la Variedad *</label>
+                    <select id="variante_id" name="var_productos_id" class="form-select form-select-lg" required>
                         @foreach($producto->var_productos as $index => $var)
                             <option value="{{ $var->id }}" 
                                     data-precio="{{ $var->precio }}" 
@@ -61,21 +61,28 @@
 
                 <div class="row g-3 align-items-end mb-4">
                     <div class="col-sm-4">
-                        <label for="quantity-input" class="form-label fw-bold text-dark">Cantidad</label>
-                        <input type="number" id="quantity-input" name="cantidad" class="form-control form-select-lg text-center" 
+                        <label for="cantidad" class="form-label fw-bold text-dark">Cantidad</label>
+                        <input type="number" id="cantidad" name="cantidad" class="form-control form-select-lg text-center" 
                                value="1" min="1" max="{{ $producto->var_productos->first()->stock ?? 1 }}" required>
                     </div>
                     
                     <div class="col-sm-8">
                         @auth
-                            <button type="submit" id="submit-btn" class="btn btn-dark btn-lg w-100 fw-bold py-3">
-                                <i class="bi bi-cart-plus-fill me-2"></i> Agregar al Carrito
-                            </button>
+                            {{-- Evaluamos el stock de la primera variante para el estado inicial del botón --}}
+                            @if($producto->var_productos->first()->stock == 0)
+                                <button type="button" id="submit-btn" class="btn btn-success btn-lg w-100 fw-bold py-3" disabled>
+                                    <i class="bi bi-x-circle me-2"></i> Sin Stock
+                                </button>
+                            @else
+                                <button type="submit" id="submit-btn" class="btn btn-success btn-lg w-100 fw-bold py-3">
+                                    <i class="bi bi-cart-plus-fill me-2"></i> Agregar al Carrito
+                                </button>
+                            @endif
                         @endauth
 
                         @guest
                             <a href="{{ route('login') }}" class="btn btn-warning btn-lg w-100 fw-bold py-3 text-dark shadow-sm">
-                                <i class="bi bi-box-arrow-in-right me-2"></i> Iniciá sesión para comprar
+                                <i class="bi bi-box-arrow-in-right me-2"></i> Iniciá sesión
                             </a>
                         @endguest
                     </div>
@@ -88,11 +95,10 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Asegurate de que el ID 'variant-select' sea el mismo que tiene tu etiqueta <select>
-        const variantSelect = document.getElementById('variant-select');
+        const variantSelect = document.getElementById('variante_id');
         const priceDisplay = document.getElementById('dynamic-price');
         const stockBadge = document.getElementById('stock-badge');
-        const quantityInput = document.getElementById('quantity-input');
+        const quantityInput = document.getElementById('cantidad');
         const productImage = document.getElementById('product-image');
         const submitBtn = document.getElementById('submit-btn');
 
@@ -106,9 +112,6 @@
             const precio = parseFloat(selectedOption.getAttribute('data-precio'));
             const stock = parseInt(selectedOption.getAttribute('data-stock'));
             const img = selectedOption.getAttribute('data-img');
-
-            // CONTROL EN CONSOLA: Borrá esto cuando funcione, es para ver si JS responde al cambio
-            console.log("Variante cambiada. Precio:", precio, "Stock:", stock, "Imagen:", img);
 
             // 1. Actualizamos el precio formateado a pesos argentinos
             if (priceDisplay && !isNaN(precio)) {
@@ -128,6 +131,8 @@
                     
                     if(submitBtn) {
                         submitBtn.disabled = false;
+                        submitBtn.type = "submit"; 
+                        submitBtn.className = "btn btn-success btn-lg w-100 fw-bold py-3";
                         submitBtn.innerHTML = '<i class="bi bi-cart-plus-fill me-2"></i> Agregar al Carrito';
                     }
                 } else {
@@ -155,8 +160,6 @@
             variantSelect.addEventListener('change', updateVariantDetails);
             // Ejecutamos una vez al arrancar para setear los datos de la primera variante
             updateVariantDetails();
-        } else {
-            console.error("No se encontró el elemento con ID 'variant-select' en el HTML.");
         }
     });
     </script>
