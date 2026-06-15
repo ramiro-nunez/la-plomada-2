@@ -88,7 +88,6 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Asegurate de que el ID 'variant-select' sea el mismo que tiene tu etiqueta <select>
         const variantSelect = document.getElementById('variant-select');
         const priceDisplay = document.getElementById('dynamic-price');
         const stockBadge = document.getElementById('stock-badge');

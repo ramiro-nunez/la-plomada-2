@@ -55,4 +55,18 @@ class CarritoController extends Controller
         // 4. Redireccionamos al usuario a la vista del carrito para que vea lo que sumó
         return redirect()->route('carrito.ver')->with('success', '¡Producto sumado al carrito!');
     }
+
+    public function eliminarProducto($detalleId)
+    {
+        // Buscamos el detalle del carrito por su ID
+        $detalle = DetalleCarrito::find($detalleId);
+
+        // Verificamos que el detalle exista y que pertenezca al carrito del usuario logueado
+        if ($detalle && $detalle->carrito->user_id == auth()->id()) {
+            $detalle->delete(); // Eliminamos el detalle del carrito
+            return redirect()->route('carrito.ver')->with('success', '¡Producto eliminado del carrito!');
+        }
+
+        return redirect()->route('carrito.ver')->with('error', 'No se pudo eliminar el producto del carrito.');
+    }
 }

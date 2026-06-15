@@ -16,7 +16,7 @@
         <div class="card text-center p-5 shadow-sm">
             <div class="card-body">
                 <p class="fs-4 text-muted">Tu carrito está vacío actualmente.</p>
-                <a href="{{ route('catalogo') }}" class="btn btn-primary btn-lg mt-3">Volver al Catálogo</a>
+                <a href="/productos" class="btn btn-primary btn-lg mt-3">Volver al Catálogo</a>
             </div>
         </div>
     @else
@@ -38,6 +38,7 @@
                                             <th scope="col" class="text-center">Cantidad</th>
                                             <th scope="col" class="text-end">Precio Unitario</th>
                                             <th scope="col" class="text-end pe-4">Subtotal</th>
+                                            <th scope="col" class="text-end pe-4">Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -66,6 +67,9 @@
                                                 </td>
                                                 <td class="text-end fw-bold text-dark pe-4">
                                                     ${{ number_format($subtotalItem, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-end pe-4">
+                                                    <a href="{{ route('carrito.eliminar', $detalle->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que quieres eliminar este producto del carrito?')">Eliminar</a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -163,7 +167,7 @@
                             </button>
                             
                             <div class="text-center mt-3">
-                                <a href="" class="text-decoration-none small text-muted">
+                                <a href="/productos" class="text-decoration-none small text-muted">
                                     <i class="bi bi-arrow-left"></i> Seguir sumando productos
                                 </a>
                             </div>
