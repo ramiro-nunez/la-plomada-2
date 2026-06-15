@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\VariantController;
 use App\Http\Controllers\CarritoController;
+use App\Http\Controllers\CompraController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -80,6 +81,6 @@ Route::get('/carrito/eliminar/{detalleId}', [CarritoController::class, 'eliminar
 
 Route::post('/compra/confirmar', [App\Http\Controllers\CompraController::class, 'confirmar'])->name('compra.confirmar');
 
-Route::get('/mis-compras', function () {
-    return view('mis-compras');
-})->name('mis-compras');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/mis-compras', [CompraController::class, 'historial'])->name('compras.historial');
+});
