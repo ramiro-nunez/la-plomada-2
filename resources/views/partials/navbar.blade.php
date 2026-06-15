@@ -32,7 +32,7 @@
                 Mi Cuenta
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Mis compras</a></li>
+                <li><a class="dropdown-item" href="/mis-compras">Mis compras</a></li>
                 <li><a class="dropdown-item" href="/profile">Editar perfil</a></li>
                 
                 <li><hr class="dropdown-divider"></li>

@@ -79,3 +79,7 @@ Route::post('/detalle', [CarritoController::class, 'agregarProducto'])->name('de
 Route::get('/carrito/eliminar/{detalleId}', [CarritoController::class, 'eliminarProducto'])->name('carrito.eliminar');
 
 Route::post('/compra/confirmar', [App\Http\Controllers\CompraController::class, 'confirmar'])->name('compra.confirmar');
+
+Route::get('/mis-compras', function () {
+    return view('mis-compras');
+})->name('mis-compras');
