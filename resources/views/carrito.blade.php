@@ -80,32 +80,89 @@
                     </div>
 
                     <div class="card shadow-sm mb-4">
-                        <div class="card-header bg-white py-3">
-                            <h5 class="mb-0 text-secondary"><i class="bi bi-truck"></i> Método de Envío</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="form-check card-radio p-3 border rounded">
-                                        <input class="form-check-input" type="radio" name="metodo_envio" id="envio_domicilio" value="domicilio" checked>
-                                        <label class="form-check-label ms-2 d-block" for="envio_domicilio">
-                                            <span class="fw-bold d-block">Envío a Domicilio</span>
-                                            <small class="text-muted">Entrega en su dirección registrada.</small>
-                                        </label>
-                                    </div>
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0 text-secondary"><i class="bi bi-truck"></i> Método de Envío</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <div class="form-check card-radio p-3 border rounded">
+                                    <input class="form-check-input" type="radio" name="retiro_sucursal" id="envio_domicilio" value="0" checked>
+                                    <label class="form-check-label ms-2 d-block" for="envio_domicilio">
+                                        <span class="fw-bold d-block">Envío a Domicilio</span>
+                                        <small class="text-muted">Entrega en su dirección registrada.</small>
+                                    </label>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-check card-radio p-3 border rounded">
-                                        <input class="form-check-input" type="radio" name="metodo_envio" id="envio_sucursal" value="sucursal">
-                                        <label class="form-check-label ms-2 d-block" for="envio_sucursal">
-                                            <span class="fw-bold d-block">Retiro en Sucursal</span>
-                                            <small class="text-muted">Listo para retirar en 24hs hábiles (Gratis).</small>
-                                        </label>
-                                    </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check card-radio p-3 border rounded">
+                                    <input class="form-check-input" type="radio" name="retiro_sucursal" id="envio_sucursal" value="1">
+                                    <label class="form-check-label ms-2 d-block" for="envio_sucursal">
+                                        <span class="fw-bold d-block">Retiro en Sucursal</span>
+                                        <small class="text-muted">Listo para retirar en 24hs hábiles (Gratis).</small>
+                                    </label>
                                 </div>
                             </div>
                         </div>
+
+                        <div id="contenedor-direccion" class="border-top pt-4">
+                            <h6 class="mb-3 text-dark fw-bold">Datos de Entrega</h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label small text-muted">Provincia</label>
+                                    <input type="text" name="provincia" class="form-control" placeholder="Ej: Corrientes">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label small text-muted">Ciudad / Localidad</label>
+                                    <input type="text" name="ciudad" class="form-control" placeholder="Ej: Corrientes Capital">
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label small text-muted">Cód. Postal</label>
+                                    <input type="text" name="codigo_postal" class="form-control" placeholder="3400">
+                                </div>
+                                <div class="col-md-8">
+                                    <label class="form-label small text-muted">Calle</label>
+                                    <input type="text" name="calle" class="form-control" placeholder="Ej: Av. Centenario">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label small text-muted">Altura / Nro</label>
+                                    <input type="text" name="altura" class="form-control" placeholder="Ej: 1420">
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
+                </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const radioDomicilio = document.getElementById('envio_domicilio');
+                        const radioSucursal = document.getElementById('envio_sucursal');
+                        const contenedorDireccion = document.getElementById('contenedor-direccion');
+                        const inputsDireccion = contenedorDireccion.querySelectorAll('input');
+
+                        function alternarFormularioEnvio() {
+                            if (radioSucursal.checked) {
+                                // Ocultar el formulario con clases nativas de Bootstrap
+                                contenedorDireccion.classList.add('d-none');
+                                // Deshabilitar inputs para que no se envíen datos vacíos al backend
+                                inputsDireccion.forEach(input => input.removeAttribute('required'));
+                            } else {
+                                // Mostrar formulario
+                                contenedorDireccion.classList.remove('d-none');
+                                // Hacer obligatorios los campos si va a domicilio
+                                inputsDireccion.forEach(input => input.setAttribute('required', 'true'));
+                            }
+                        }
+
+                        // Escuchar los cambios en los radio buttons
+                        radioDomicilio.addEventListener('change', alternarFormularioEnvio);
+                        radioSucursal.addEventListener('change', alternarFormularioEnvio);
+                        
+                        // Ejecutar al cargar la página por primera vez
+                        alternarFormularioEnvio();
+                    });
+                </script>
 
                     <div class="card shadow-sm">
                         <div class="card-header bg-white py-3">
