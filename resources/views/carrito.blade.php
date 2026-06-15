@@ -20,7 +20,7 @@
             </div>
         </div>
     @else
-        <form action="" method="POST">
+        <form action="{{route('compra.confirmar')}}" method="POST">
             @csrf
             
             <div class="row g-4">

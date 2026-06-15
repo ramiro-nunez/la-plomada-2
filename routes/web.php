@@ -77,3 +77,5 @@ Route::post('/contactanos', [ContactoController::class, 'procesar'])->name('cont
 
 Route::post('/detalle', [CarritoController::class, 'agregarProducto'])->name('detalle.agregarProducto');
 Route::get('/carrito/eliminar/{detalleId}', [CarritoController::class, 'eliminarProducto'])->name('carrito.eliminar');
+
+Route::post('/compra/confirmar', [App\Http\Controllers\CompraController::class, 'confirmar'])->name('compra.confirmar');
