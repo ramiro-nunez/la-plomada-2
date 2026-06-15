@@ -20,7 +20,7 @@
             </div>
         </div>
     @else
-        <form action="{{route('compra.confirmar')}}" method="POST">
+        <form action="{{route('compra.confirmar')}}" method="POST" id="formCheckout">
             @csrf
             
             <div class="row g-4">
@@ -133,37 +133,6 @@
 
                     </div>
                 </div>
-
-                <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                        const radioDomicilio = document.getElementById('envio_domicilio');
-                        const radioSucursal = document.getElementById('envio_sucursal');
-                        const contenedorDireccion = document.getElementById('contenedor-direccion');
-                        const inputsDireccion = contenedorDireccion.querySelectorAll('input');
-
-                        function alternarFormularioEnvio() {
-                            if (radioSucursal.checked) {
-                                // Ocultar el formulario con clases nativas de Bootstrap
-                                contenedorDireccion.classList.add('d-none');
-                                // Deshabilitar inputs para que no se envíen datos vacíos al backend
-                                inputsDireccion.forEach(input => input.removeAttribute('required'));
-                            } else {
-                                // Mostrar formulario
-                                contenedorDireccion.classList.remove('d-none');
-                                // Hacer obligatorios los campos si va a domicilio
-                                inputsDireccion.forEach(input => input.setAttribute('required', 'true'));
-                            }
-                        }
-
-                        // Escuchar los cambios en los radio buttons
-                        radioDomicilio.addEventListener('change', alternarFormularioEnvio);
-                        radioSucursal.addEventListener('change', alternarFormularioEnvio);
-                        
-                        // Ejecutar al cargar la página por primera vez
-                        alternarFormularioEnvio();
-                    });
-                </script>
-
                     <div class="card shadow-sm">
                         <div class="card-header bg-white py-3">
                             <h5 class="mb-0 text-secondary"><i class="bi bi-credit-card"></i> Método de Pago</h5>
@@ -219,8 +188,8 @@
                                 <span class="fs-4 fw-bold text-primary">${{ number_format($totalAcumulado, 2, ',', '.') }}</span>
                             </div>
 
-                            <button type="submit" class="btn btn-success btn-lg w-100 py-3 fw-bold uppercase shadow-sm">
-                                <i class="bi bi-check-circle-fill"></i> Confirmar y Comprar
+                            <button type="button" id="btn-pre-confirmar" class="btn btn-success btn-lg w-100 py-3 fw-bold uppercase shadow-sm">
+                                <i class="bi bi-check-circle-fill"></i> Finalizar Compra
                             </button>
                             
                             <div class="text-center mt-3">
@@ -233,9 +202,94 @@
                 </div>
             </div>
         </form>
+        <div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="modalConfirmacionLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0 shadow-lg">
+                    
+                    <div class="modal-header bg-dark text-white py-3">
+                        <h5 class="modal-title fw-bold" id="modalConfirmacionLabel">
+                            <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i> ¿Confirmar tu pedido?
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    <div class="modal-body p-4 text-center">
+                        <p class="fs-5 text-dark mb-2">Estás a un paso de finalizar tu compra en <strong>La Plomada</strong>.</p>
+                        <p class="text-muted small">Al confirmar, procesaremos tu pedido con el método de pago y envío seleccionados. Los precios de los productos se congelarán en este instante.</p>
+                        
+                        <div class="alert alert-secondary py-2 mt-3 mb-0">
+                            <span class="text-muted">Total a abonar:</span>
+                            <strong class="text-primary fs-4 d-block">${{ number_format($totalAcumulado, 2, ',', '.') }}</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-footer bg-light border-top-0 d-flex gap-2">
+                        <button type="button" class="btn btn-outline-secondary w-25 py-2 fw-bold" data-bs-dismiss="modal">
+                            Volver
+                        </button>
+                        
+                        <button type="submit" class="btn btn-success flex-grow-1 py-2 fw-bold shadow-sm" id="btn-finalizar-compra">
+                            <i class="bi bi-bag-check-fill"></i> Sí, confirmar compra
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     @endif
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const radioDomicilio = document.getElementById('envio_domicilio');
+        const radioSucursal = document.getElementById('envio_sucursal');
+        const contenedorDireccion = document.getElementById('contenedor-direccion');
+        const inputsDireccion = contenedorDireccion.querySelectorAll('input');
+
+        function alternarFormularioEnvio() {
+            if (radioSucursal.checked) {
+                // Ocultar el formulario con clases nativas de Bootstrap
+                contenedorDireccion.classList.add('d-none');
+                // Deshabilitar inputs para que no se envíen datos vacíos al backend
+                inputsDireccion.forEach(input => input.removeAttribute('required'));
+            } else {
+                // Mostrar formulario
+                contenedorDireccion.classList.remove('d-none');
+                // Hacer obligatorios los campos si va a domicilio
+                inputsDireccion.forEach(input => input.setAttribute('required', 'true'));
+            }
+        }
+
+        // Escuchar los cambios en los radio buttons
+        radioDomicilio.addEventListener('change', alternarFormularioEnvio);
+        radioSucursal.addEventListener('change', alternarFormularioEnvio);
+        
+        // Ejecutar al cargar la página por primera vez
+        alternarFormularioEnvio();
+        const form = document.getElementById('formCheckout');
+        const btnPreConfirmar = document.getElementById('btn-pre-confirmar');
+        
+        // Inicializamos el modal de Bootstrap mediante JS para poder controlarlo a gusto
+        const modalConfirmacion = new bootstrap.Modal(document.getElementById('modalConfirmacion'));
+
+        btnPreConfirmar.addEventListener('click', function () {
+            // Le pedimos al formulario que se valide a sí mismo (revisa inputs required.)
+            if (form.checkValidity()) {
+                // SI ESTÁ TODO COMPLETADO: Abrimos el modal flotante de forma manual
+                modalConfirmacion.show();
+            } else {
+                // SI FALTA ALGO: el navegador a mostrar los globos de error nativos
+                form.reportValidity();
+            }
+        });
+        const btnFinalizarCompra = document.getElementById('btn-finalizar-compra');
+
+        btnFinalizarCompra.addEventListener('click', function() {
+            form.submit(); // Fuerza al formulario a enviarse sí o sí al hacer clic en el modal
+        });
+    });
+    
+</script>
 <style>
     .card-radio {
         transition: all 0.2s ease-in-out;
@@ -249,4 +303,5 @@
         color: #0d6efd;
     }
 </style>
+
 @endsection

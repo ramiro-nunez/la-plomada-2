@@ -92,7 +92,7 @@ class CompraController extends Controller
         });
 
         // Redireccionar al usuario a una vista de éxito o historial
-        return redirect()->route('catalogo.index')->with('success', "¡Pedido #{$compraId} confirmado con éxito! Pronto nos comunicaremos.");
+        return redirect()->route('carrito.ver')->with('success', "¡Pedido #{$compraId} confirmado con éxito! Pronto nos comunicaremos.");
     }
     public function historial()
     {
