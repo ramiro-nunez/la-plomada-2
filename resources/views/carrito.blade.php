@@ -87,18 +87,18 @@
                         <div class="row g-3 mb-4">
                             <div class="col-md-6">
                                 <div class="form-check card-radio p-3 border rounded">
-                                    <input class="form-check-input" type="radio" name="retiro_sucursal" id="envio_domicilio" value="0" checked>
+                                    <input class="form-check-input ms-2" type="radio" name="retiro_sucursal" id="envio_domicilio" value="0" checked>
                                     <label class="form-check-label ms-2 d-block" for="envio_domicilio">
-                                        <span class="fw-bold d-block">Envío a Domicilio</span>
+                                        <span class="fw-bold mx-4 d-block ">Envío a Domicilio</span>
                                         <small class="text-muted">Entrega en su dirección registrada.</small>
                                     </label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-check card-radio p-3 border rounded">
-                                    <input class="form-check-input" type="radio" name="retiro_sucursal" id="envio_sucursal" value="1">
+                                    <input class="form-check-input ms-2" type="radio" name="retiro_sucursal" id="envio_sucursal" value="1">
                                     <label class="form-check-label ms-2 d-block" for="envio_sucursal">
-                                        <span class="fw-bold d-block">Retiro en Sucursal</span>
+                                        <span class="fw-bold mx-4 d-block">Retiro en Sucursal</span>
                                         <small class="text-muted">Listo para retirar en 24hs hábiles (Gratis).</small>
                                     </label>
                                 </div>
@@ -139,30 +139,27 @@
                         </div>
                         <div class="card-body">
                             <div class="row g-3">
-                                <div class="col-md-4">
-                                    <div class="form-check card-radio p-3 border rounded text-center">
-                                        <input class="form-check-input float-none mb-2" type="radio" name="metodo_pago" id="pago_efectivo" value="efectivo" checked>
-                                        <label class="form-check-label d-block" for="pago_efectivo">
-                                            <span class="fw-bold d-block">Efectivo / Rapipago</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-check card-radio p-3 border rounded text-center">
-                                        <input class="form-check-input float-none mb-2" type="radio" name="metodo_pago" id="pago_transferencia" value="transferencia">
-                                        <label class="form-check-label d-block" for="pago_transferencia">
-                                            <span class="fw-bold d-block">Transferencia Bancaria</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-check card-radio p-3 border rounded text-center">
-                                        <input class="form-check-input float-none mb-2" type="radio" name="metodo_pago" id="pago_online" value="mercado_pago">
-                                        <label class="form-check-label d-block" for="pago_online">
-                                            <span class="fw-bold d-block">Mercado Pago / Tarjeta</span>
-                                        </label>
-                                    </div>
-                                </div>
+                            <div class="col-md-4">
+                                {{-- Convertimos el label en el contenedor principal --}}
+                                <label class="d-flex flex-column align-items-center justify-content-center p-3 border rounded text-center h-100 bg-white" for="pago_efectivo" style="cursor: pointer; transition: all 0.2s;">
+                                    <input class="form-check-input mb-2 mt-0" type="radio" name="metodo_pago" id="pago_efectivo" value="efectivo" checked>
+                                    <span class="fw-bold text-dark">Efectivo / Rapipago</span>
+                                </label>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label class="d-flex flex-column align-items-center justify-content-center p-3 border rounded text-center h-100 bg-white" for="pago_transferencia" style="cursor: pointer; transition: all 0.2s;">
+                                    <input class="form-check-input mb-2 mt-0" type="radio" name="metodo_pago" id="pago_transferencia" value="transferencia">
+                                    <span class="fw-bold text-dark">Transferencia Bancaria</span>
+                                </label>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label class="d-flex flex-column align-items-center justify-content-center p-3 border rounded text-center h-100 bg-white" for="pago_online" style="cursor: pointer; transition: all 0.2s;">
+                                    <input class="form-select-input mb-2 mt-0" type="radio" name="metodo_pago" id="pago_online" value="mercado_pago">
+                                    <span class="fw-bold text-dark">Mercado Pago / Tarjeta</span>
+                                </label>
+                            </div>
                             </div>
                         </div>
                     </div>
