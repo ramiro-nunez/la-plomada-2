@@ -68,9 +68,16 @@
                     
                     <div class="col-sm-8">
                         @auth
-                            <button type="submit" id="submit-btn" class="btn btn-dark btn-lg w-100 fw-bold py-3">
-                                <i class="bi bi-cart-plus-fill me-2"></i> Agregar al Carrito
-                            </button>
+                            {{-- Evaluamos el stock de la primera variante para el estado inicial del botón --}}
+                            @if($producto->var_productos->first()->stock == 0)
+                                <button type="button" id="submit-btn" class="btn btn-success btn-lg w-100 fw-bold py-3" disabled>
+                                    <i class="bi bi-x-circle me-2"></i> Sin Stock
+                                </button>
+                            @else
+                                <button type="submit" id="submit-btn" class="btn btn-success btn-lg w-100 fw-bold py-3">
+                                    <i class="bi bi-cart-plus-fill me-2"></i> Agregar al Carrito
+                                </button>
+                            @endif
                         @endauth
 
                         @guest
@@ -88,10 +95,10 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const variantSelect = document.getElementById('variant-select');
+        const variantSelect = document.getElementById('variante_id');
         const priceDisplay = document.getElementById('dynamic-price');
         const stockBadge = document.getElementById('stock-badge');
-        const quantityInput = document.getElementById('quantity-input');
+        const quantityInput = document.getElementById('cantidad');
         const productImage = document.getElementById('product-image');
         const submitBtn = document.getElementById('submit-btn');
 
@@ -124,6 +131,8 @@
                     
                     if(submitBtn) {
                         submitBtn.disabled = false;
+                        submitBtn.type = "submit"; 
+                        submitBtn.className = "btn btn-success btn-lg w-100 fw-bold py-3";
                         submitBtn.innerHTML = '<i class="bi bi-cart-plus-fill me-2"></i> Agregar al Carrito';
                     }
                 } else {
@@ -151,8 +160,6 @@
             variantSelect.addEventListener('change', updateVariantDetails);
             // Ejecutamos una vez al arrancar para setear los datos de la primera variante
             updateVariantDetails();
-        } else {
-            console.error("No se encontró el elemento con ID 'variant-select' en el HTML.");
         }
     });
     </script>
