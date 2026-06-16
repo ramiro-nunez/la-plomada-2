@@ -30,7 +30,7 @@
                             <h5 class="mb-0 text-secondary">Items seleccionados</h5>
                         </div>
                         <div class="card-body p-0">
-                            <div class="table-responsive">
+                            <div class="table-responsive d-none d-md-block">
                                 <table class="table table-hover align-middle mb-0">
                                     <thead class="table-light">
                                         <tr>
@@ -76,6 +76,58 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <div class="d-block d-md-none p-3 bg-light rounded-bottom">
+                                @if(!isset($totalAcumulado)) @php $totalAcumulado = 0; @endphp @endif
+                                
+                                @foreach($carrito->detalles as $detalle)
+                                    @php 
+                                        $precioActual = $detalle->varProducto->precio; 
+                                        $subtotalItem = $precioActual * $detalle->cantidad;
+                                        // Evitamos duplicar la suma si por alguna razón se renderizaran ambos bloques
+                                        if(!html_entity_decode(trim('d-none d-md-block'))) { $totalAcumulado += $subtotalItem; }
+                                    @endphp
+                                    
+                                    <div class="card border-0 shadow-sm rounded-3 mb-3 p-3 bg-white">
+                                        
+                                        <div class="d-flex justify-content-between align-items-start gap-2 mb-3">
+                                            <div>
+                                                <h6 class="mb-1 fw-bold text-dark" style="font-size: 0.95rem;">
+                                                    {{ $detalle->varProducto->producto->nombre }}
+                                                </h6>
+                                                <span class="badge bg-light text-secondary border px-2 py-1" style="font-size: 0.75rem;">
+                                                    {{ $detalle->varProducto->descripcion }}
+                                                </span>
+                                            </div>
+                                            <a href="{{ route('carrito.eliminar', $detalle->id) }}" 
+                                            class="btn btn-outline-danger btn-sm border-0 px-2 py-1" 
+                                            onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?')">
+                                                <i class="bi bi-trash3-fill"></i>
+                                            </a>
+                                        </div>
+
+                                        <hr class="text-muted my-2 opacity-25">
+
+                                        <div class="d-flex justify-content-between align-items-center mt-2">
+                                            
+                                            <div class="d-flex align-items-center gap-2">
+                                                <small class="text-muted" style="font-size: 0.8rem;">Cant:</small>
+                                                <span class="badge bg-dark px-2.5 py-1.5 fs-6 fw-semibold rounded-2">{{ $detalle->cantidad }}</span>
+                                            </div>
+
+                                            <div class="text-end">
+                                                <small class="text-muted d-block mb-0" style="font-size: 0.75rem;">
+                                                    ${{ number_format($precioActual, 2, ',', '.') }} c/u
+                                                </small>
+                                                <span class="fw-bold text-success fs-5">
+                                                    ${{ number_format($subtotalItem, 2, ',', '.') }}
+                                                </span>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
 
@@ -87,18 +139,18 @@
                         <div class="row g-3 mb-4">
                             <div class="col-md-6">
                                 <div class="form-check card-radio p-3 border rounded">
-                                    <input class="form-check-input" type="radio" name="retiro_sucursal" id="envio_domicilio" value="0" checked>
+                                    <input class="form-check-input ms-2" type="radio" name="retiro_sucursal" id="envio_domicilio" value="0" checked>
                                     <label class="form-check-label ms-2 d-block" for="envio_domicilio">
-                                        <span class="fw-bold d-block">Envío a Domicilio</span>
+                                        <span class="fw-bold mx-4 d-block ">Envío a Domicilio</span>
                                         <small class="text-muted">Entrega en su dirección registrada.</small>
                                     </label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-check card-radio p-3 border rounded">
-                                    <input class="form-check-input" type="radio" name="retiro_sucursal" id="envio_sucursal" value="1">
+                                    <input class="form-check-input ms-2" type="radio" name="retiro_sucursal" id="envio_sucursal" value="1">
                                     <label class="form-check-label ms-2 d-block" for="envio_sucursal">
-                                        <span class="fw-bold d-block">Retiro en Sucursal</span>
+                                        <span class="fw-bold mx-4 d-block">Retiro en Sucursal</span>
                                         <small class="text-muted">Listo para retirar en 24hs hábiles (Gratis).</small>
                                     </label>
                                 </div>
@@ -139,30 +191,27 @@
                         </div>
                         <div class="card-body">
                             <div class="row g-3">
-                                <div class="col-md-4">
-                                    <div class="form-check card-radio p-3 border rounded text-center">
-                                        <input class="form-check-input float-none mb-2" type="radio" name="metodo_pago" id="pago_efectivo" value="efectivo" checked>
-                                        <label class="form-check-label d-block" for="pago_efectivo">
-                                            <span class="fw-bold d-block">Efectivo / Rapipago</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-check card-radio p-3 border rounded text-center">
-                                        <input class="form-check-input float-none mb-2" type="radio" name="metodo_pago" id="pago_transferencia" value="transferencia">
-                                        <label class="form-check-label d-block" for="pago_transferencia">
-                                            <span class="fw-bold d-block">Transferencia Bancaria</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-check card-radio p-3 border rounded text-center">
-                                        <input class="form-check-input float-none mb-2" type="radio" name="metodo_pago" id="pago_online" value="mercado_pago">
-                                        <label class="form-check-label d-block" for="pago_online">
-                                            <span class="fw-bold d-block">Mercado Pago / Tarjeta</span>
-                                        </label>
-                                    </div>
-                                </div>
+                            <div class="col-md-4">
+                                {{-- Convertimos el label en el contenedor principal --}}
+                                <label class="d-flex flex-column align-items-center justify-content-center p-3 border rounded text-center h-100 bg-white" for="pago_efectivo" style="cursor: pointer; transition: all 0.2s;">
+                                    <input class="form-check-input mb-2 mt-0" type="radio" name="metodo_pago" id="pago_efectivo" value="efectivo" checked>
+                                    <span class="fw-bold text-dark">Efectivo / Rapipago</span>
+                                </label>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label class="d-flex flex-column align-items-center justify-content-center p-3 border rounded text-center h-100 bg-white" for="pago_transferencia" style="cursor: pointer; transition: all 0.2s;">
+                                    <input class="form-check-input mb-2 mt-0" type="radio" name="metodo_pago" id="pago_transferencia" value="transferencia">
+                                    <span class="fw-bold text-dark">Transferencia Bancaria</span>
+                                </label>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label class="d-flex flex-column align-items-center justify-content-center p-3 border rounded text-center h-100 bg-white" for="pago_online" style="cursor: pointer; transition: all 0.2s;">
+                                    <input class="form-select-input mb-2 mt-0" type="radio" name="metodo_pago" id="pago_online" value="mercado_pago">
+                                    <span class="fw-bold text-dark">Mercado Pago / Tarjeta</span>
+                                </label>
+                            </div>
                             </div>
                         </div>
                     </div>

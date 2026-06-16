@@ -12,20 +12,13 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\VariantController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CompraController;
+use App\Http\Controllers\HomeController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/* Rutas que solo renderizan vistas */
+Route::get('/', [HomeController::class, 'index']);
 
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::get('/contactanos', function () {
+    return view('contactanos');
 });
 Route::get('/quienes-somos', function () {
     return view('quienes-somos');});

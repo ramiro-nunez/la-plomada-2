@@ -18,14 +18,14 @@
                     <div class="card h-100 border-0 shadow-sm p-4 info-card">
                         <i class="bi bi-telephone text-success display-6 mb-3"></i>
                         <h5 class="fw-bold">Teléfono</h5>
-                        <a href="tel:+543794123456" class="text-decoration-none text-muted">+54 379 412-3456</a>
+                        <span class="text-decoration-none text-muted">+54 379 412-3456</span>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3">
                     <div class="card h-100 border-0 shadow-sm p-4 info-card">
                         <i class="bi bi-envelope text-success display-6 mb-3"></i>
                         <h5 class="fw-bold">Email</h5>
-                        <a href="mailto:info@laplomada.com.ar" class="text-decoration-none text-muted">info@laplomada.com.ar</a>
+                        <span class="text-decoration-none text-muted">info@laplomada.com.ar</span>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3">
@@ -167,12 +167,18 @@
 
                     <div class="mt-5">
                         <h2 class="fw-bold mb-3">Ubicación</h2>
-                        <div class="rounded-4 overflow-hidden shadow-sm border" style="height: 250px; background: #eee; display: grid; place-items: center;">
-                            <div class="text-center">
-                                <i class="bi bi-geo-alt-fill text-danger display-4"></i>
-                                <p class="mb-0 fw-bold">Corrientes Capital</p>
-                                <small class="text-muted">Junín 1234</small>
-                            </div>
+                        
+                        <div class="rounded-4 overflow-hidden shadow-sm border" style="height: 250px;">
+                            
+                            <iframe 
+                                src="https://maps.google.com/maps?q=Junin%201234,%20Corrientes,%20Argentina&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                                class="w-100 h-100"
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+
                         </div>
                     </div>
                 </div>
