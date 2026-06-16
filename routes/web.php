@@ -34,6 +34,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::post('/detalle', [CarritoController::class, 'agregarProducto'])->name('detalle.agregarProducto');
+    Route::get('/carrito/eliminar/{detalleId}', [CarritoController::class, 'eliminarProducto'])->name('carrito.eliminar');
+
+    Route::post('/compra/confirmar', [App\Http\Controllers\CompraController::class, 'confirmar'])->name('compra.confirmar');
     Route::get('/mis-compras', [CompraController::class, 'historial'])->name('compras.historial');
 });
 
