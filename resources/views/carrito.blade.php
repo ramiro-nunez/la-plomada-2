@@ -30,7 +30,7 @@
                             <h5 class="mb-0 text-secondary">Items seleccionados</h5>
                         </div>
                         <div class="card-body p-0">
-                            <div class="table-responsive">
+                            <div class="table-responsive d-none d-md-block">
                                 <table class="table table-hover align-middle mb-0">
                                     <thead class="table-light">
                                         <tr>
@@ -75,6 +75,58 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="d-block d-md-none p-3 bg-light rounded-bottom">
+                                @if(!isset($totalAcumulado)) @php $totalAcumulado = 0; @endphp @endif
+                                
+                                @foreach($carrito->detalles as $detalle)
+                                    @php 
+                                        $precioActual = $detalle->varProducto->precio; 
+                                        $subtotalItem = $precioActual * $detalle->cantidad;
+                                        // Evitamos duplicar la suma si por alguna razón se renderizaran ambos bloques
+                                        if(!html_entity_decode(trim('d-none d-md-block'))) { $totalAcumulado += $subtotalItem; }
+                                    @endphp
+                                    
+                                    <div class="card border-0 shadow-sm rounded-3 mb-3 p-3 bg-white">
+                                        
+                                        <div class="d-flex justify-content-between align-items-start gap-2 mb-3">
+                                            <div>
+                                                <h6 class="mb-1 fw-bold text-dark" style="font-size: 0.95rem;">
+                                                    {{ $detalle->varProducto->producto->nombre }}
+                                                </h6>
+                                                <span class="badge bg-light text-secondary border px-2 py-1" style="font-size: 0.75rem;">
+                                                    {{ $detalle->varProducto->descripcion }}
+                                                </span>
+                                            </div>
+                                            <a href="{{ route('carrito.eliminar', $detalle->id) }}" 
+                                            class="btn btn-outline-danger btn-sm border-0 px-2 py-1" 
+                                            onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?')">
+                                                <i class="bi bi-trash3-fill"></i>
+                                            </a>
+                                        </div>
+
+                                        <hr class="text-muted my-2 opacity-25">
+
+                                        <div class="d-flex justify-content-between align-items-center mt-2">
+                                            
+                                            <div class="d-flex align-items-center gap-2">
+                                                <small class="text-muted" style="font-size: 0.8rem;">Cant:</small>
+                                                <span class="badge bg-dark px-2.5 py-1.5 fs-6 fw-semibold rounded-2">{{ $detalle->cantidad }}</span>
+                                            </div>
+
+                                            <div class="text-end">
+                                                <small class="text-muted d-block mb-0" style="font-size: 0.75rem;">
+                                                    ${{ number_format($precioActual, 2, ',', '.') }} c/u
+                                                </small>
+                                                <span class="fw-bold text-success fs-5">
+                                                    ${{ number_format($subtotalItem, 2, ',', '.') }}
+                                                </span>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
