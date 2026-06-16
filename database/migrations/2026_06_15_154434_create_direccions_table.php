@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('compras', function (Blueprint $table) {
+        Schema::create('direcciones', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('direccion_id')->nullable();
-            $table->string('metodo_pago');
-            $table->boolean('retiro_sucursal')->default(false);
-            $table->decimal('total', 10, 2); //total calculado al momento de la compra
-            $table->string('estado')->default('pendiente');
+            $table->string('provincia');
+            $table->string('ciudad');
+            $table->string('codigo_postal');
+            $table->string('calle');
+            $table->string('altura');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('compras');
+        Schema::dropIfExists('direccions');
     }
 };

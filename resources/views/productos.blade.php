@@ -50,7 +50,7 @@
 
             <div class="row row-cols-1 row-cols-md-3 g-4">
             @forelse($productos as $producto)
-            <div class="col-sm-4 mb-4">
+            <div class="col-md-4 col-sm-6 mb-4">
                 <div class="border text-center product-card bg-white h-100 d-flex flex-column p-1 justify-content-between rounded shadow-sm">
                     
                     <div class="mb-2 overflow-hidden product-img">

@@ -10,15 +10,13 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\VariantController;
-
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Http\Controllers\CarritoController;
+use App\Http\Controllers\CompraController;
+use App\Http\Controllers\HomeController;
 
 /* Rutas que solo renderizan vistas */
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index']);
+
 Route::get('/contactanos', function () {
     return view('contactanos');
 });
@@ -30,6 +28,11 @@ Route::get('/comercio', function () {
 Route::get('/terms', function () {
     return view('terminos');
 });
+
+
+Route::get('/carrito', [CarritoController::class, 'ver'])->name('carrito.ver');
+
+
 Route::get('/productos', [CatalogController::class, 'index']);
 
 Route::middleware('auth')->group(function () {
@@ -71,3 +74,11 @@ Route::middleware(['auth', IsAdminMiddleware::class])->group(function () {
     Route::put('/editar-variante/{id}', [VariantController::class, 'update'])->name('variantes.update');
 });
 
+Route::post('/detalle', [CarritoController::class, 'agregarProducto'])->name('detalle.agregarProducto');
+Route::get('/carrito/eliminar/{detalleId}', [CarritoController::class, 'eliminarProducto'])->name('carrito.eliminar');
+
+Route::post('/compra/confirmar', [App\Http\Controllers\CompraController::class, 'confirmar'])->name('compra.confirmar');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/mis-compras', [CompraController::class, 'historial'])->name('compras.historial');
+});

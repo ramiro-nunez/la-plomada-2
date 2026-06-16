@@ -24,6 +24,11 @@ class DatabaseSeeder extends Seeder
         ]);
         $this->call([
             CatalogSeeder::class,
+            HistorialComprasSeeder::class,
+            AdminUserSeeder::class,
+            ProductSeeder::class,
+            VariantProductSeeder::class,
+            ProductCategorySeeder::class,
         ]);
     }
 }

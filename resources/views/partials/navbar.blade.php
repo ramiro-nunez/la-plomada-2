@@ -37,7 +37,7 @@
                 Mi Cuenta
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Mis compras</a></li>
+                <li><a class="dropdown-item" href="/mis-compras">Mis compras</a></li>
                 <li><a class="dropdown-item" href="/profile">Editar perfil</a></li>
                 
                 <li><hr class="dropdown-divider"></li>
@@ -52,7 +52,7 @@
                 </li>
               </ul>
             </li>
-            <a class="nav-link mx-2" href="#">
+            <a class="nav-link mx-2" href="/carrito">
                 <i class="bi bi-cart3 fs-5"></i>
             </a>        
             @endif
