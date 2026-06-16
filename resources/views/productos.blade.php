@@ -55,9 +55,9 @@
                     
                     <div class="mb-2 overflow-hidden product-img">
                         @if($producto->var_productos->first() && $producto->var_productos->first()->url_img)
-                            <img src="{{ asset('img/catalogo/' . $producto->var_productos->first()->url_img) }}" class="w-100 h-100 img-catalogo" alt="{{ $producto->nombre }}">
+                            <img src="{{ asset('storage/' . $producto->var_productos->first()->url_img) }}" class="w-100 h-100 img-catalogo" alt="{{ $producto->nombre }}">
                         @else
-                            <img src="{{ asset('img/catalogo/cana2.jpg') }}" class="w-100 h-100 img-catalogo" alt="{{ $producto->nombre }}">
+                            <img src="{{ asset('img/catalogo/unnamed.jpg') }}" class="w-100 h-100 img-catalogo" alt="{{ $producto->nombre }}">
                         @endif
                     </div>
 

@@ -12,7 +12,7 @@
         <div class="col-md-6">
             <div class="card shadow-sm border-0 p-3 bg-white text-center">
                 @if($producto->var_productos->first() && $producto->var_productos->first()->url_img)
-                    <img id="product-image" src="{{ asset('img/catalogo/' . $producto->var_productos->first()->url_img) }}" 
+                    <img id="product-image" src="{{ asset('storage/' . $producto->var_productos->first()->url_img) }}" 
                          class="img-fluid rounded" alt="{{ $producto->nombre }}" style="max-height: 450px; object-fit: contain;">
                 @else
                     <img id="product-image" src="{{ asset('img/catalogo/cana2.jpg') }}" 
@@ -52,6 +52,7 @@
                                     data-precio="{{ $var->precio }}" 
                                     data-stock="{{ $var->stock }}"
                                     data-img="{{ $var->url_img ?? '' }}"
+                                    data-fallback="{{ asset('img/catalogo/unnamed.jpg') }}"
                                     {{ $index == 0 ? 'selected' : '' }}>
                                 {{ $var->descripcion }}
                             </option>
@@ -150,8 +151,14 @@
             }
 
             // 3. Si la variante tiene una imagen propia en var_productos, la cambia en vivo
-            if (productImage && img && img.trim() !== '') {
-                productImage.src = `/img/catalogo/${img}`;
+            if (productImage) {
+                const fallbackImg = selectedOption.getAttribute('data-fallback');
+                
+                if (img && img.trim() !== '') {
+                    productImage.src = `/storage/${img}`;
+                } else if (fallbackImg) {
+                    productImage.src = fallbackImg;
+                }
             }
         }
 
