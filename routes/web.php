@@ -69,3 +69,7 @@ Route::middleware(['auth', IsAdminMiddleware::class])->group(function () {
     Route::get('/ventas', [AdminController::class, 'ventas'])->name('ventas');
     Route::put('/ventas/{id}', [AdminController::class, 'updateVenta'])->name('ventas.update');
 });
+
+Route::fallback(function () {
+    return response()->view('error-de-ruta', [], 404);
+});
