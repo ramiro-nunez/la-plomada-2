@@ -93,5 +93,50 @@
             @endif
         </div>
     </div>
+    @if(!$variantesEliminadas->isEmpty())
+        <div class="bg-dark row justify-content-center pt-4">
+            <h4 class="text-center text-white mb-3"><i class="bi bi-archive-fill me-2"></i> Variantes Archivadas / Eliminadas</h4>
+            <div class="table-responsive">
+                <table class="table table-dark table-bordered border-secondary text-center mb-0 opacity-75">
+                    <thead class="table-secondary text-dark">
+                        <tr>
+                            <th class="d-none d-md-table-cell py-3 px-2">Ícono</th>
+                            <th class="py-3 px-2">Nombre Anterior</th>
+                            <th class="d-none d-md-table-cell py-3 px-2">Último Costo</th>
+                            <th class="py-3">Reactivar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($variantesEliminadas as $eliminada)
+                        <tr class="align-middle text-muted">
+                            {{-- Imagen --}}
+                            <td class="d-none d-md-table-cell py-3">
+                                <img src="{{ asset('storage/' . $eliminada->url_img) }}" style="width: 60px; height: 60px; object-fit: cover; filter: grayscale(100%);">
+                            </td>
+                            {{-- Nombre combinando safe-navigation por si el producto también se borró --}}
+                            <td class="py-3 text-start ps-3">
+                                <span class="text-decoration-line-through">{{ $eliminada->producto->nombre ?? 'Producto no disponible' }}</span>
+                                <br><small class="text-secondary">{{ $eliminada->descripcion }}</small>
+                            </td>
+                            {{-- Precio --}}
+                            <td class="d-none d-md-table-cell py-3 px-2">${{ number_format($eliminada->precio, 2) }}</td>
+                            {{-- Acción de Restaurar --}}
+                            <td class="py-3">
+                                <form action="{{ route('variantes.restore', $eliminada->id) }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" class="btn btn-sm btn-primary px-3 shadow-sm" title="Volver a activar en el catálogo">
+                                        <i class="bi bi-arrow-counterclockwise me-1"></i> Activar
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach   
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    @endif
+    {{-- FIN SECCIÓN ELIMINADOS --}}
 </div>
 @endsection

@@ -65,6 +65,7 @@ Route::middleware(['auth', IsAdminMiddleware::class])->group(function () {
 
     Route::get('/editar-variante/{id}', [VariantController::class, 'editar'])->name('variantes.editar');
     Route::put('/editar-variante/{id}', [VariantController::class, 'update'])->name('variantes.update');
+    Route::patch('/variantes/{id}/restore', [VariantController::class, 'restore'])->name('variantes.restore');
 
     Route::get('/ventas', [AdminController::class, 'ventas'])->name('ventas');
     Route::put('/ventas/{id}', [AdminController::class, 'updateVenta'])->name('ventas.update');

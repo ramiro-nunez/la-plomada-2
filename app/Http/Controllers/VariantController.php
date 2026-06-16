@@ -15,11 +15,19 @@ class VariantController extends Controller
         $productos = Producto::all();
         $variantes = Var_producto::all();
         
+        $variantesEliminadas = Var_producto::onlyTrashed()->with('producto')->get();
         // Retornamos la vista y le pasamos la variable $variantes
         // usando compact() para que Blade pueda leerla.
-        return view('crear-variante', compact('variantes', 'productos'));
+        return view('crear-variante', compact('variantes', 'productos', 'variantesEliminadas'));
     }
-    
+    public function restore($id)
+    {
+        // Buscamos el registro únicamente entre los eliminados y lo restauramos
+        $variante = Var_Producto::onlyTrashed()->findOrFail($id);
+        $variante->restore();
+
+        return redirect()->back()->with('success', 'Variante reactivada y devuelta al catálogo con éxito.');
+    }
     public function store(Request $request) { 
 
         $request->validate([
