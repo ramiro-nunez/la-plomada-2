@@ -1,6 +1,6 @@
 @extends('app') <!-- Lo siguiente se extiende del padre app -->
 
-@section('title', 'Crear Variante')
+@section('title', 'Editar Variante')
 
 @section('content')
 <div class="bg-dark py-5">

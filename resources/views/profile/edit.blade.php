@@ -1,6 +1,6 @@
 @extends('app') <!-- Lo siguiente se extiende del padre app -->
 
-@section('title', 'Comercialización')
+@section('title', 'Editar Perfil')
 @section('content')
 
 
