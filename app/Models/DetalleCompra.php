@@ -18,6 +18,6 @@ class DetalleCompra extends Model
     }
 
     public function varProducto(){
-        return $this->belongsTo(Var_producto::class, 'var_productos_id');
+        return $this->belongsTo(Var_producto::class, 'var_productos_id')->withTrashed();
     }
 }

@@ -17,7 +17,17 @@ class AdminController extends Controller
 
     public function ventas(Request $request) { 
         
-        $ventas = Compra::all();
+    $ventas = Compra::with([
+            'user', // Si mostrás qué usuario compró en tu vista
+            'detalles_compra.varProducto' => function ($query) {
+                $query->withTrashed(); // Trae variantes borradas lógicamente
+            },
+            'detalles_compra.varProducto.producto' => function ($query) {
+                $query->withTrashed(); // Trae el producto padre borrado lógicamente
+            }
+        ])
+        ->orderBy('created_at', 'desc') // Opcional: Las ventas más recientes primero
+        ->get();
         
         return view('ventas', compact('ventas'));
     }

@@ -19,6 +19,6 @@ class Var_producto extends Model
     // Cada variante pertenece a un producto
     public function producto(): BelongsTo
     {
-        return $this->belongsTo(Producto::class, 'id_producto', 'id');
+        return $this->belongsTo(Producto::class, 'id_producto', 'id')->withTrashed();
     }
 }
