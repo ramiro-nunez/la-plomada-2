@@ -32,7 +32,7 @@ class AdminController extends Controller
     // 1. Buscamos el producto en la DB (si no existe, lanza error 404 automático)
     $user = User::findOrFail($id);
     
-    // 2. Validamos los datos (lo ideal es usar un FormRequest, pero lo resumo aquí)
+    // 2. Validamos los datos
     $datosValidados = $request->validate([
         'rol' => 'required|in:admin,customer',
     ]);

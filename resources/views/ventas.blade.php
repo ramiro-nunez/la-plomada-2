@@ -144,7 +144,7 @@
                                         <form action="{{ route('ventas.update', $venta->id) }}" method="POST">
                                             @csrf
                                             @method('PUT')
-                                            <select class="form-select form-control" id="estado" name="estado" required>
+                                            <select class="form-select form-control mb-2" id="estado" name="estado" required>
                                                 <option value="" disabled selected>Seleccionar</option>
                                                 <option value="pendiente">Pendiente</option>
                                                 <option value="pagado">Pagado</option>

@@ -34,7 +34,7 @@
                                     <form action="{{ route('usuarios.update', $usuario->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <select class="form-select form-control" id="rol" name="rol" required>
+                                        <select class="form-select form-control mb-2" id="rol" name="rol" required>
                                             <option value="" disabled selected>Seleccionar</option>
                                             <option value="admin">admin</option>
                                             <option value="cliente">cliente</option>
