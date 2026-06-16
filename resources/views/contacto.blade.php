@@ -17,10 +17,10 @@
                             <tr>
                                 <th class="d-none d-md-table-cell py-3 border-bottom-2">Nombre</th>
                                 <th class="d-none d-md-table-cell py-3 border-bottom-2">Apellido</th>
-                                <th class="d-none d-md-table-cell py-3 border-bottom-2">Email</th>
+                                <th class="d-md-table-cell py-3 border-bottom-2">Email</th>
                                 <th class="d-none d-md-table-cell py-3 border-bottom-2">Teléfono</th>
                                 <th class="d-none d-md-table-cell py-3 border-bottom-2">Asunto</th>
-                                <th class="d-none d-md-table-cell py-3 border-bottom-2">Mensaje</th>
+                                <th class="d-md-table-cell py-3 border-bottom-2">Mensaje</th>
                                 <th class="py-3 border-bottom-2">Contestar</th>
                             </tr>
                         </thead>
@@ -29,10 +29,10 @@
                             <tr class="fila-consulta">
                                 <td class="d-none d-md-table-cell py-3" data-nombre>{{ $contacto->nombre }}</td>
                                 <td class="d-none d-md-table-cell py-3" data-apellido>{{ $contacto->apellido }}</td>
-                                <td class="d-none d-md-table-cell py-3" data-email>{{ $contacto->email }}</td>
+                                <td class="d-md-table-cell py-3" data-email>{{ $contacto->email }}</td>
                                 <td class="d-none d-md-table-cell py-3" data-telefono>{{ $contacto->telefono }}</td>
                                 <td class="d-none d-md-table-cell py-3" data-asunto>{{ $contacto->asunto }}</td>
-                                <td class="d-none d-md-table-cell py-3" data-mensaje>{{ $contacto->mensaje }}</td>
+                                <td class="d-md-table-cell py-3" data-mensaje>{{ $contacto->mensaje }}</td>
                                 <td class="py-3">
                                     <button class="btn btn-sm btn-warning btn-enviar-webhook" type="button">
                                         <i class="bi bi-send"></i> Enviar
