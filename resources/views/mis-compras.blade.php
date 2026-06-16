@@ -20,7 +20,7 @@
         <div class="card-body">
             <i class="bi bi-emoji-neutral text-muted" style="font-size: 3rem;"></i>
             <p class="fs-4 text-muted mt-3">Aún no realizaste ninguna compra.</p>
-            <a href="{{ route('catalogo') }}" class="btn btn-primary mt-2">Explorar Productos</a>
+            <a href="{{ route('catalog.index') }}" class="btn btn-primary mt-2">Explorar Productos</a>
         </div>
     </div>
 @else

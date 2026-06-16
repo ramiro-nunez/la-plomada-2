@@ -170,7 +170,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label small text-muted">Cód. Postal</label>
-                                    <input type="text" name="codigo_postal" class="form-control" placeholder="3400">
+                                    <input type="number" name="codigo_postal" class="form-control" placeholder="3400">
                                 </div>
                                 <div class="col-md-8">
                                     <label class="form-label small text-muted">Calle</label>
@@ -178,7 +178,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label small text-muted">Altura / Nro</label>
-                                    <input type="text" name="altura" class="form-control" placeholder="Ej: 1420">
+                                    <input type="number" name="altura" class="form-control" placeholder="Ej: 1420">
                                 </div>
                             </div>
                         </div>
