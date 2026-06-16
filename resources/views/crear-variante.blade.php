@@ -57,27 +57,27 @@
                     <table class="table table-dark table-bordered border-warning table-hover text-center mb-0">
                         <thead class="table-warning">
                             <tr>
-                                <th class="py-3 px-2 border-bottom-2">Ícono</th>
+                                <th class="d-none d-md-table-cell py-3 px-2 border-bottom-2">Ícono</th>
                                 <th class="py-3 px-2 border-bottom-2">Nombre</th>
                                 <th class="d-none d-md-table-cell py-3 px-2 border-bottom-2">Costo</th>
                                 <th class="d-none d-md-table-cell py-3 px-2 border-bottom-2">Stock</th>
-                                <th class="d-none d-md-table-cell py-3 border-bottom-2">Editar</th>
-                                <th class="d-none d-md-table-cell py-3 border-bottom-2">Eliminar</th>
+                                <th class="d-md-table-cell py-3 border-bottom-2">Editar</th>
+                                <th class="d-md-table-cell py-3 border-bottom-2">Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($variantes as $variante)
                             <tr>
-                                <td class="py-3 "><img src="{{ asset('storage/' . $variante->url_img) }}"  style="width: 60px; height: 60px; object-fit: cover;"></td>
+                                <td class="d-none d-md-table-cell py-3 "><img src="{{ asset('storage/' . $variante->url_img) }}"  style="width: 60px; height: 60px; object-fit: cover;"></td>
                                 <td class="py-3 "><span>{{ $variante->producto->nombre }} - </span><small>{{ $variante->descripcion }}</small></td>
                                 <td class="d-none d-md-table-cell py-3 px-2">${{ number_format($variante->precio, 2) }}</td>
                                 <td class="d-none d-md-table-cell py-3 px-2">{{ $variante->stock }}</td>
-                                <td class="d-none d-md-table-cell py-3">
+                                <td class="d-md-table-cell py-3">
                                     <a href="{{ route('variantes.editar', $variante->id) }}" class="btn btn-warning">
                                         <i class="bi bi-pencil-fill me-2"></i>
                                     </a>
                                 </td>
-                                <td class="d-none d-md-table-cell py-3">
+                                <td class="d-md-table-cell py-3">
                                 <!-- Accion directa de eliminación de artículo -->
                                     <form action="{{ route('variantes.destroy', $variante->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este artículo? Esta acción no se puede deshacer.');">
                                         @csrf
