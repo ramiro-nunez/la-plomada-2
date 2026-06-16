@@ -25,8 +25,13 @@
                             <input type="number" class="form-control" id="stock" name="stock" value="{{ $var_producto->stock }}">
                         </div>
                         <div class="mb-3">
+                            @if ($var_producto->url_img)
+                                <div class="mb-2">
+                                    <img src="{{ asset('storage/' . $var_producto->url_img) }}" alt="Imagen actual" class="img-thumbnail" style="max-width: 200px;">
+                                </div>
+                            @endif
                             <label for="url_img">Imagen del artículo</label>
-                            <input type="file" id="url_img" name="url_img" accept="image/jpg, image/jpeg" required>
+                            <input type="file" id="url_img" name="url_img" accept="image/jpg, image/jpeg">
                         </div>
                         <div class="px-0 pb-0 border-0">
                             <a href="{{ route('variantes.create') }}" class="btn btn-secondary">Cancelar</a>

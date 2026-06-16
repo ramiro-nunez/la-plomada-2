@@ -17,12 +17,12 @@ class ContactoController extends Controller
     public function procesar(Request $request) { 
         // 1. Validamos los datos que entran del formulario
         $datosValidados = $request->validate([
-            'nombre'   => 'required|string|max:255',
-            'apellido'   => 'required|string|max:255',
-            'email'    => 'required|email|max:255',
+            'nombre'   => 'required|string|max:50',
+            'apellido' => 'required|string|max:50',
+            'email'    => 'required|email|max:100',
             'telefono' => 'nullable|numeric',
-            'asunto'   => 'required|string|max:255',
-            'mensaje'  => 'required|string',
+            'asunto'   => 'required|string|max:100',
+            'mensaje'  => 'required|string|max:2000',
         ]);
 
         // 2. Guardamos la consulta en la tabla 'contactos'

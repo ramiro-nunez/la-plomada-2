@@ -74,17 +74,25 @@ class VariantController extends Controller
     
     // 2. Validamos los datos (lo ideal es usar un FormRequest, pero lo resumo aquí)
     $datosValidados = $request->validate([
-        'descripcion' => 'required|string|max:255',
-        'precio' => 'required|numeric|min:0',
-        'stock' => 'required|integer|min:0',
-        'url_img' => 'required|image|mimes:jpeg,jpg|max:2048',
+        'descripcion' => 'nullable|string|max:255',
+        'precio' => 'nullable|numeric|min:0',
+        'stock' => 'nullable|integer|min:0',
+        'url_img' => 'nullable|image|mimes:jpeg,jpg|max:2048',
     ]);
     
-    $path = $request->file('url_img')->store('productos', 'public');
-    $datosValidados['url_img'] = $path; 
+    // Esto evita que si el usuario no completó un input, se guarde vacío en la BD
+    $datosFiltrados = array_filter($datosValidados, function ($value) {
+        return $value !== null;
+    });
 
-    // 3. Actualizamos la base de datos
-    $var_producto->update($datosValidados);
+    // 3. Manejo especial de la imagen: Solo si el usuario subió un archivo nuevo
+    if ($request->hasFile('url_img')) {
+        $path = $request->file('url_img')->store('productos', 'public');
+        $datosFiltrados['url_img'] = $path;
+    }
+
+    // 4. Actualizamos la base de datos SOLO con los campos que sí se ingresaron
+    $var_producto->update($datosFiltrados);
     
     // 4. Redirigimos de vuelta a la tabla con un mensaje de éxito
     return redirect('/crear-variante')->with('success', 'Producto actualizado correctamente.');
