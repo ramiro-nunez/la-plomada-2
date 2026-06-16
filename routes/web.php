@@ -72,6 +72,9 @@ Route::middleware(['auth', IsAdminMiddleware::class])->group(function () {
 
     Route::get('/editar-variante/{id}', [VariantController::class, 'editar'])->name('variantes.editar');
     Route::put('/editar-variante/{id}', [VariantController::class, 'update'])->name('variantes.update');
+
+    Route::get('/ventas', [AdminController::class, 'ventas'])->name('ventas');
+    Route::put('/ventas/{id}', [AdminController::class, 'updateVenta'])->name('ventas.update');
 });
 
 Route::post('/detalle', [CarritoController::class, 'agregarProducto'])->name('detalle.agregarProducto');

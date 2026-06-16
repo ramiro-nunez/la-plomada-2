@@ -21,20 +21,25 @@
                     <a class="btn btn-warning mt-2 w-100" href='/crear-variante'>Agregar Variante</a>
                 </div>
             </div>
-            <div class="container py-2">
-                <h2 class="subtitulo-seccion fw-bold text-center mb-5">Usuarios Registrados</h2>
-                <div class="row justify-content-center text-dark mb-5">
-                    <div class="col col-lg-6">
+            <div style="height: 2px; background: linear-gradient(90deg, transparent, #ff9900, transparent); margin: 30px 0;"></div>
+            <div class="row justify-content-center text-dark mb-5">
+                <div class="col col-lg-4">
+                    <div class="container py-2">
+                        <h2 class="subtitulo-seccion fw-bold text-center mb-5">Usuarios Registrados</h2>
                         <a class="btn btn-warning mt-2 w-100" href='/usuarios'>Gestionar Usuarios</a>
-                    </div>
+                    </div> 
                 </div>
-            </div>
-            <div class="container py-2">
-                <h2 class="subtitulo-seccion fw-bold text-center mb-5">Consultas de Usuarios</h2>
-                <div class="row justify-content-center text-dark mb-5">
-                    <div class="col col-lg-6">
+                <div class="col col-lg-4">
+                    <div class="container py-2">
+                        <h2 class="subtitulo-seccion fw-bold text-center mb-5">Consultas de Usuarios</h2>
                         <a class="btn btn-warning mt-2 w-100" href='/consultas'>Consultas</a>
-                    </div>
+                    </div> 
+                </div>
+                <div class="col col-lg-4">
+                    <div class="container py-2">
+                        <h2 class="subtitulo-seccion fw-bold text-center mb-5">Ventas Realizadas</h2>
+                        <a class="btn btn-warning mt-2 w-100" href='/ventas'>Gestionar Ventas</a>
+                    </div> 
                 </div>
             </div>
         </div>
