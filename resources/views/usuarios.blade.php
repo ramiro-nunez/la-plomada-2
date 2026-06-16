@@ -17,9 +17,9 @@
                             <tr>
                                 <th class="d-none d-md-table-cell py-3 border-bottom-2">Nombre</th>
                                 <th class="d-none d-md-table-cell py-3 border-bottom-2">Apellido</th>
-                                <th class="d-none d-md-table-cell py-3 border-bottom-2">Email</th>
-                                <th class="d-none d-md-table-cell py-3 border-bottom-2">Rol</th>
-                                <th class="d-none d-md-table-cell py-3 border-bottom-2">Cambiar Rol</th>
+                                <th class="d-md-table-cell py-3 border-bottom-2">Email</th>
+                                <th class="d-md-table-cell py-3 border-bottom-2">Rol</th>
+                                <th class="d-md-table-cell py-3 border-bottom-2">Cambiar Rol</th>
                             </tr>
                         </thead>
                         <tbody class="text-secondary text-nowrap ">
@@ -27,9 +27,9 @@
                             <tr>
                                 <td class="d-none d-md-table-cell py-3">{{ $usuario->name }}</td>
                                 <td class="d-none d-md-table-cell py-3">{{ $usuario->apellido }}</td>
-                                <td class="d-none d-md-table-cell py-3">{{ $usuario->email }}</td>
-                                <td class="d-none d-md-table-cell py-3">{{ $usuario->rol }}</td>
-                                <td class="d-none d-md-table-cell py-3">
+                                <td class="d-md-table-cell py-3">{{ $usuario->email }}</td>
+                                <td class="d-md-table-cell py-3">{{ $usuario->rol }}</td>
+                                <td class="d-md-table-cell py-3">
                                     <!-- Accion directa de cambio de Rol de Usuario -->
                                     <form action="{{ route('usuarios.update', $usuario->id) }}" method="POST">
                                         @csrf
