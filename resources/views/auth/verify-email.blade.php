@@ -1,5 +1,8 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
+@extends('app') <!-- Lo siguiente se extiende del padre app -->
+
+@section('title', 'Iniciar-Sesion')
+@section('content')
+    <div class="mb-4 text-sm text-primary">
         {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
     </div>
 
@@ -28,4 +31,4 @@
             </button>
         </form>
     </div>
-</x-guest-layout>
+@endsection

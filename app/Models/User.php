@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
+use App\Notifications\RecuperarContrasenaNotification;
 
 #[Fillable(['name', 'apellido', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
@@ -30,5 +31,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        // Dispara nuestra propia notificación pasando el token
+        $this->notify(new RecuperarContrasenaNotification($token));
     }
 }
