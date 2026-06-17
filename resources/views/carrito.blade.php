@@ -11,6 +11,26 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
+    @if($errors->has('cantidad'))
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm border-start border-danger border-4 d-flex align-items-center" role="alert">
+            <i class="bi bi-exclamation-triangle-fill fs-4 me-3"></i>
+            <div>
+                <strong class="d-block">¡Problema con el stock solicitado!</strong>
+                {{ $errors->first('cantidad') }}
+            </div>
+            <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if(session('error'))
+        <div class="alert alert-warning alert-dismissible fade show shadow-sm border-start border-warning border-4 d-flex align-items-center" role="alert">
+            <i class="bi bi-exclamation-diamond-fill fs-4 text-warning me-3"></i>
+            <div>
+                <strong class="d-block">Aviso del sistema</strong>
+                {{ session('error') }}
+            </div>
+            <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
     @if(!$carrito || $carrito->detalles->isEmpty())
         <div class="card text-center p-5 shadow-sm">
@@ -45,17 +65,22 @@
                                         @php $totalAcumulado = 0; @endphp
                                         @foreach($carrito->detalles as $detalle)
                                             @php 
-                                                $precioActual = $detalle->varProducto->precio; 
+                                                $precioActual = $detalle->varProducto?->precio; 
                                                 $subtotalItem = $precioActual * $detalle->cantidad;
                                                 $totalAcumulado += $subtotalItem;
+                                                
                                             @endphp
                                             <tr>
                                                 <td class="ps-4 py-3">
                                                     <div class="d-flex align-items-center">
                                                         {{-- Si tenés imágenes guardadas, podés usarlas acá --}}
                                                         <div>
-                                                            <h6 class="mb-0 fw-bold text-dark">{{ $detalle->varProducto->producto->nombre }}</h6>
-                                                            <small class="text-muted">{{ $detalle->varProducto->descripcion }}</small>
+                                                        <h6 class="mb-0 fw-bold text-dark">
+                                                            {{ $detalle->varProducto?->producto?->nombre ?? 'Producto no disponible' }}
+                                                        </h6>
+                                                        <small class="text-muted">
+                                                            {{ $detalle->varProducto?->descripcion ?? 'Esta variante ya no existe' }}
+                                                        </small>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -81,7 +106,7 @@
                                 
                                 @foreach($carrito->detalles as $detalle)
                                     @php 
-                                        $precioActual = $detalle->varProducto->precio; 
+                                        $precioActual = $detalle->varProducto?->precio; 
                                         $subtotalItem = $precioActual * $detalle->cantidad;
                                         // Evitamos duplicar la suma si por alguna razón se renderizaran ambos bloques
                                         if(!html_entity_decode(trim('d-none d-md-block'))) { $totalAcumulado += $subtotalItem; }
@@ -92,10 +117,10 @@
                                         <div class="d-flex justify-content-between align-items-start gap-2 mb-3">
                                             <div>
                                                 <h6 class="mb-1 fw-bold text-dark" style="font-size: 0.95rem;">
-                                                    {{ $detalle->varProducto->producto->nombre }}
+                                                    {{ $detalle->varProducto?->producto?->nombre ?? 'Producto no disponible' }}
                                                 </h6>
                                                 <span class="badge bg-light text-secondary border px-2 py-1" style="font-size: 0.75rem;">
-                                                    {{ $detalle->varProducto->descripcion }}
+                                                    {{ $detalle->varProducto?->descripcion ?? 'Esta variante ya no existe' }}
                                                 </span>
                                             </div>
                                             <a href="{{ route('carrito.eliminar', $detalle->id) }}" 
@@ -218,6 +243,37 @@
                 </div>
 
                 <div class="col-lg-4">
+                    @php
+                        $tieneProblemasStock = false;
+                        $productosConProblema = [];
+                        
+                        foreach($carrito->detalles as $detalle) {
+                            $varProducto = $detalle->varProducto;
+                            
+                            // Verificar si la variante existe
+                            if(!$varProducto) {
+                                $tieneProblemasStock = true;
+                                $productosConProblema[] = [
+                                    'tipo' => 'no_disponible',
+                                    'nombre' => 'Producto no disponible'
+                                ];
+                                continue;
+                            }
+                            
+                            // Verificar si el stock es insuficiente
+                            if($varProducto->stock < $detalle->cantidad) {
+                                $tieneProblemasStock = true;
+                                $productosConProblema[] = [
+                                    'tipo' => 'stock_insuficiente',
+                                    'nombre' => $varProducto->producto?->nombre ?? 'Producto desconocido',
+                                    'variante' => $varProducto->descripcion,
+                                    'stock_disponible' => $varProducto->stock,
+                                    'cantidad_solicitada' => $detalle->cantidad
+                                ];
+                            }
+                        }
+                    @endphp
+
                     <div class="card shadow-sm sticky-top" style="top: 20px; z-index: 10;">
                         <div class="card-header bg-dark text-white py-3">
                             <h5 class="mb-0">Resumen del Pedido</h5>
@@ -237,9 +293,37 @@
                                 <span class="fs-4 fw-bold text-primary">${{ number_format($totalAcumulado, 2, ',', '.') }}</span>
                             </div>
 
-                            <button type="button" id="btn-pre-confirmar" class="btn btn-success btn-lg w-100 py-3 fw-bold uppercase shadow-sm">
-                                <i class="bi bi-check-circle-fill"></i> Finalizar Compra
-                            </button>
+                            @if($tieneProblemasStock)
+                                <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+                                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                    <strong>Problemas de stock:</strong>
+                                    <ul class="mb-0 mt-2 ms-2">
+                                        @foreach($productosConProblema as $problema)
+                                            @if($problema['tipo'] === 'no_disponible')
+                                                <li class="small">Uno de tus productos ya no está disponible</li>
+                                            @else
+                                                <li class="small">
+                                                    <strong>{{ $problema['nombre'] }}</strong>
+                                                    ({{ $problema['variante'] }}):<br>
+                                                    Solicitaste {{ $problema['cantidad_solicitada'] }} pero solo hay {{ $problema['stock_disponible'] }} disponible
+                                                </li>
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+
+                                <button type="button" id="btn-pre-confirmar" class="btn btn-secondary btn-lg w-100 py-3 fw-bold uppercase shadow-sm" disabled>
+                                    <i class="bi bi-exclamation-circle-fill"></i> No puedes finalizar
+                                </button>
+                                <small class="d-block text-center text-danger mt-2">
+                                    Revisa el stock disponible de tus productos y actualiza las cantidades
+                                </small>
+                            @else
+                                <button type="button" id="btn-pre-confirmar" class="btn btn-success btn-lg w-100 py-3 fw-bold uppercase shadow-sm">
+                                    <i class="bi bi-check-circle-fill"></i> Finalizar Compra
+                                </button>
+                            @endif
                             
                             <div class="text-center mt-3">
                                 <a href="/productos" class="text-decoration-none small text-muted">

@@ -12,13 +12,12 @@ class CompraController extends Controller
 {
     public function confirmar(Request $request)
     {
-        // 1. VALIDACIÓN: Adaptamos las reglas según el método de envío
+        // 1. VALIDACIÓN BÁSICA: Reglas según el método de envío
         $reglas = [
             'retiro_sucursal' => 'required|boolean',
             'metodo_pago'     => 'required|string',
         ];
 
-        // Si es '0' (Envío a domicilio), los campos de dirección pasan a ser obligatorios
         if ($request->input('retiro_sucursal') == '0') {
             $reglas['provincia']     = 'required|string|max:100';
             $reglas['ciudad']        = 'required|string|max:100';
@@ -31,16 +30,35 @@ class CompraController extends Controller
 
         $user = auth()->user();
 
-        // 2. OBTENER EL CARRITO: Traemos los detalles y el precio actual de la variante del producto
+        // 2. OBTENER EL CARRITO Y VALIDAR INTEGRIDAD (Existencia y Stock)
         $carrito = Carrito::where('user_id', $user->id)
-            ->with('detalles.varProducto')
+            ->with('detalles.varProducto.producto')
             ->first();
 
         if (!$carrito || $carrito->detalles->isEmpty()) {
             return redirect()->route('carrito.ver')->with('error', 'El carrito está vacío.');
         }
 
-        // 3. TRANSACCIÓN: Procesamos la compra de forma segura
+        // Recorremos antes de la transacción para asegurarnos de que todo esté en regla
+        foreach ($carrito->detalles as $detalle) {
+            // Validación A: Si la variante se eliminó físicamente de la BD
+            if (is_null($detalle->varProducto)) {
+                // Opcional: Limpiamos el registro huérfano automáticamente para que no vuelva a joder
+                $detalle->delete(); 
+                
+                return redirect()->route('carrito.ver')
+                    ->with('error', 'Uno de los productos de tu carrito ya no está disponible. Lo hemos removido automáticamente.');
+            }
+
+            // Validación B: Control de Stock disponible
+            if ($detalle->cantidad > $detalle->varProducto->stock) {
+                $nombreProducto = $detalle->varProducto->producto->nombre ?? 'Producto';
+                return redirect()->route('carrito.ver')
+                    ->with('error', "El producto '{$nombreProducto}' no tiene suficiente stock disponible (Stock: {$detalle->varProducto->stock}).");
+            }
+        }
+
+        // 3. TRANSACCIÓN: Si llegó acá, todo está OK. Procesamos la compra de forma segura
         $compraId = DB::transaction(function () use ($request, $user, $carrito) {
             
             $direccionId = null;
@@ -55,10 +73,10 @@ class CompraController extends Controller
                     'calle'         => $request->calle,
                     'altura'        => $request->altura,
                 ]);
-                $direccionId = $direccion->id; // Guardamos el ID generado
+                $direccionId = $direccion->id;
             }
 
-            // Calcular el monto total sumando el precio vigente de las variantes hoy
+            // Calcular el monto total (ya sabemos que varProducto no es null)
             $totalCalculado = $carrito->detalles->sum(function ($detalle) {
                 return $detalle->cantidad * $detalle->varProducto->precio; 
             });
@@ -66,22 +84,23 @@ class CompraController extends Controller
             // Crear la cabecera de la Compra
             $compra = Compra::create([
                 'user_id'         => $user->id,
-                'direccion_id'    => $direccionId, // Puede ser el ID o null si retira en sucursal
+                'direccion_id'    => $direccionId,
                 'metodo_pago'     => $request->metodo_pago,
                 'retiro_sucursal' => $request->retiro_sucursal,
                 'total'           => $totalCalculado,
                 'estado'          => 'pendiente', 
             ]);
 
-            // Copia los productos del Carrito a los Detalles de la Compra (CONGELANDO PRECIO)
+            // Copiar los productos del Carrito a los Detalles de la Compra y descontar stock
             foreach ($carrito->detalles as $itemCarrito) {
                 DetalleCompra::create([
                     'compra_id'        => $compra->id,
                     'var_productos_id' => $itemCarrito->var_productos_id,
                     'cantidad'         => $itemCarrito->cantidad,
-                    'precio_unitario'  => $itemCarrito->varProducto->precio, // <-- CONGELADO
+                    'precio_unitario'  => $itemCarrito->varProducto->precio, // Congelamos precio
                 ]);
 
+                // Descontamos del stock de la variante
                 $itemCarrito->varProducto->decrement('stock', $itemCarrito->cantidad);
             }
 
@@ -91,8 +110,9 @@ class CompraController extends Controller
             return $compra->id;
         });
 
-        // Redireccionar al usuario a una vista de éxito o historial
-        return redirect()->route('carrito.ver')->with('success', "¡Pedido #{$compraId} confirmado con éxito! Pronto nos comunicaremos.");
+        // Redireccionar al usuario con mensaje de éxito
+        return redirect()->route('carrito.ver')
+            ->with('success', "¡Pedido #{$compraId} confirmado con éxito! Pronto nos comunicaremos.");
     }
     public function historial()
     {

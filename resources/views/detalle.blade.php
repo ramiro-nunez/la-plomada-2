@@ -14,6 +14,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
+    
     <div class="row g-5">
         <div class="col-md-6">
             <div class="card shadow-sm border-0 p-3 bg-white text-center">

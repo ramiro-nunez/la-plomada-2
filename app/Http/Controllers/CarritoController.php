@@ -14,8 +14,9 @@ class CarritoController extends Controller
         
         // Buscamos el carrito donde 'user_id' sea igual al ID del usuario logueado
         $carrito = Carrito::where('user_id', auth()->id())
-            ->with('detalles.varProducto') // Cargamos sus relaciones en español
+            ->with('detalles.varProducto.producto') // Cargamos sus relaciones en español
             ->first();
+        
 
         // Si el usuario no tiene carrito todavía, mandamos null (el Blade ya sabe manejarlo)
         return view('carrito', compact('carrito'));
