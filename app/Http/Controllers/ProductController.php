@@ -10,7 +10,7 @@ class ProductController extends Controller
 {
     public function create(Request $request) { 
         $categorias = Categoria::all();
-        $productos = Producto::all();
+        $productos = Producto::all()->orderBy('created_at', 'desc')->get();
         $productosEliminados = Producto::onlyTrashed()->get();
 
 

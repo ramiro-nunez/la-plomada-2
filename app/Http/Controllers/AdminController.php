@@ -10,7 +10,7 @@ class AdminController extends Controller
 {
     public function panel(Request $request) { 
         
-        $usuarios = User::all();
+        $usuarios = User::all()->orderBy('created_at', 'desc')->get();
         
         return view('usuarios', compact('usuarios'));
     }
