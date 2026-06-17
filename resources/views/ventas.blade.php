@@ -20,7 +20,7 @@
         <div class="card-body">
             <i class="bi bi-emoji-neutral text-muted" style="font-size: 3rem;"></i>
             <p class="fs-4 text-muted mt-3">Aún no hay ventas confirmadas.</p>
-            <a href="{{ route('catalogo') }}" class="btn btn-primary mt-2">Explorar Productos</a>
+            <a href="/panel-control" class="btn btn-primary mt-2">Volver al panel de control</a>
         </div>
     </div>
 @else
