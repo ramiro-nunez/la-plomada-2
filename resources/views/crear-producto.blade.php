@@ -34,14 +34,54 @@
                     <table class="table table-dark table-bordered border-warning table-hover text-center mb-0">
                         <thead class="table-warning">
                             <tr class="text-center">
-                                <th class="py-3 px-2 border-bottom-2">Productos Existentes</th>
+                                <th class="py-3 px-2 border-bottom-2">Cat</th>
+                                <th class="py-3 px-2 border-bottom-2">Producto</th>
+                                <th class="py-3 px-2 border-bottom-2">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($productos as $producto)
                             <tr class="text-center">
+                                <td class="py-3 px-2">{{ $producto->categoria->nombre }}</td>
                                 <td class="py-3 px-2">{{ $producto->nombre }}</td>
+                                <td class="py-3 px-2 d-flex justify-content-center gap-2">
+                                    <button type="button" class="btn btn-sm btn-warning px-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#editModal{{ $producto->id }}">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </button>                            
+                                    {{-- Botón Baja Lógica (Soft Delete) --}}                            
+                                    <form action="{{ route('productos.destroy', $producto->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este producto?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger px-3 shadow-sm">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
+                            <div class="modal fade" id="editModal{{ $producto->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $producto->id }}" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content bg-secondary text-white border-warning">
+                                        <div class="modal-header border-bottom border-warning border-opacity-25">
+                                            <h5 class="modal-title fw-bold" id="editModalLabel{{ $producto->id }}"><i class="bi bi-pencil-square me-2"></i>Editar Categoría</h5>
+                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form action="{{ route('productos.update', $producto->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="modal-body py-4">
+                                                <div class="form-floating text-dark">
+                                                    <input type="text" id="edit_nombre{{ $producto->id }}" name="nombre" value="{{ old('nombre', $producto->nombre) }}" class="form-control" placeholder="Nombre" required>
+                                                    <label for="edit_nombre{{ $producto->id }}">Nuevo Nombre de Producto</label>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer border-top border-warning border-opacity-25">
+                                                <button type="button" class="btn btn-sm btn-outline-light" data-bs-dismiss="modal">Cancelar</button>
+                                                <button type="submit" class="btn btn-sm btn-warning fw-bold text-dark px-3">Guardar Cambios</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                             @endforeach
                         </tbody>
                     </table>

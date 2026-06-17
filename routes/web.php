@@ -60,6 +60,9 @@ Route::middleware(['auth', IsAdminMiddleware::class])->group(function () {
 
     Route::get('/crear-producto', [ProductController::class, 'create'])->name('productos.create');
     Route::post('/crear-producto', [ProductController::class, 'store'])->name('productos.store');
+    Route::put('/crear-productos/{id}', [ProductController::class, 'update'])->name('productos.update');
+    Route::delete('/crear-productos/{id}', [ProductController::class, 'destroy'])->name('productos.destroy');
+    Route::patch('/crear-productos/{id}/restore', [ProductController::class, 'restore'])->name('productos.restore');
     
     Route::get('/crear-variante', [VariantController::class, 'create'])->name('variantes.create');
     Route::post('/crear-variante', [VariantController::class, 'store'])->name('variantes.store');
