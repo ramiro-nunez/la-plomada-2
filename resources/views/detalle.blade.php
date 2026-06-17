@@ -7,7 +7,13 @@
     <a href="{{ route('catalog.index') }}" class="btn btn-secondary mb-4 btn-sm">
         <i class="bi bi-arrow-left"></i> Volver al catálogo
     </a>
-
+    @if($errors->has('cantidad'))
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i> 
+            {{ $errors->first('cantidad') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <div class="row g-5">
         <div class="col-md-6">
             <div class="card shadow-sm border-0 p-3 bg-white text-center">

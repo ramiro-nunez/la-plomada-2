@@ -44,7 +44,7 @@ class ContactoController extends Controller
     
     public function consultas(Request $request) { 
         
-        $contactos = Contacto::all()->orderBy('created_at', 'desc')->get();
+        $contactos = Contacto::orderBy('created_at', 'desc')->get();
         
         return view('contacto', compact('contactos'));
     }

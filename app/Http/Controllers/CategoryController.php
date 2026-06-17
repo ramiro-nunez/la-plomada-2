@@ -8,7 +8,7 @@ use App\Models\Categoria;
 class CategoryController extends Controller
 {
     public function create(Request $request) { 
-        $categorias = Categoria::all()->orderBy('created_at', 'desc')->get();
+        $categorias = Categoria::orderBy('created_at', 'desc')->get();
         
         $categoriasEliminadas = Categoria::onlyTrashed()->get();
         return view('crear-categoria', compact('categorias', 'categoriasEliminadas'));
