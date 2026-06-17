@@ -54,7 +54,9 @@ Route::middleware(['auth', IsAdminMiddleware::class])->group(function () {
     //Rutas para crear categorias, productos y variantes
     Route::get('/crear-categoria', [CategoryController::class, 'create'])->name('categorias.create');
     Route::post('/crear-categoria', [CategoryController::class, 'store'])->name('categorias.store');
-    
+    Route::put('/categorias/{id}', [CategoryController::class, 'update'])->name('categorias.update');
+    Route::delete('/categorias/{id}', [CategoryController::class, 'destroy'])->name('categorias.destroy');
+
     Route::get('/crear-producto', [ProductController::class, 'create'])->name('productos.create');
     Route::post('/crear-producto', [ProductController::class, 'store'])->name('productos.store');
     

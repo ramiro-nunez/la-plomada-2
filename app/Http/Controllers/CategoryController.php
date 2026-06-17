@@ -24,5 +24,24 @@ class CategoryController extends Controller
         ]);
         return redirect('/panel-control')->with('success', 'Categoría creada exitosamente!');
     }
+    public function update(Request $request, $id)
+    {
+        $categoria = Categoria::findOrFail($id);
 
+        $datosValidados = $request->validate([
+            'nombre' => 'required|string|max:100|unique:categorias,nombre,' . $id,
+        ]);
+
+        $categoria->update($datosValidados);
+
+        return redirect()->back()->with('success', 'Categoría modificada correctamente.');
+    }
+
+    public function destroy($id)
+    {
+        $categoria = Categoria::findOrFail($id);
+        $categoria->delete();
+
+        return redirect()->back()->with('success', 'Categoría eliminada correctamente.');
+    }
 }

@@ -34,7 +34,7 @@
                                         <span class="text-muted small d-block">NOMBRE</span>
                                         <span>{{ $contacto->nombre . ' ' . $contacto->apellido }}hs</span>
                                     </div>
-                                    <div class="col-6 col-md-3 mr-2 ms-auto mt-md-0">
+                                    <div class="col-6 col-md-3 mt-2 ms-auto mt-md-0">
                                         <span class="text-muted small d-block">ASUNTO</span>
                                         <strong class="text-primary">{{ $contacto->asunto }}</strong>
                                     </div>
