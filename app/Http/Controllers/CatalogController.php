@@ -13,10 +13,17 @@ class CatalogController extends Controller
         $categoriaId = $request->input('categoria');
         $orden = $request->input('orden');
 
-        // Iniciamos consulta mapeando tus relaciones en español
-        $query = Producto::with('categoria', 'var_productos')
-            ->withMin('var_productos', 'precio'); // Genera la columna 'var_productos_min_precio'
-
+        // Iniciamos consulta 
+        $query = Producto::whereHas('categoria')
+        ->with([
+            'categoria', 
+            'var_productos' => function ($q) {
+                // Trae solo las variantes activas (ignora las que tienen SoftDelete)
+            }
+        ])
+        ->withMin(['var_productos' => function ($q) {
+            // calcula el precio mínimo solo sobre las variantes no eliminadas
+        }], 'precio');
         // Filtro por categoría
         if ($categoriaId) {
             $query->where('id_categoria', $categoriaId);
