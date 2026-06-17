@@ -13,7 +13,7 @@ class VariantController extends Controller
         // Traemos los productos de la DB, paginados de a 12 por página.
         // Opcional: puedes agregar un where() si solo quieres mostrar productos con stock.
         $productos = Producto::all();
-        $variantes = Var_producto::all();
+        $variantes = Var_producto::all()->orderBy('created_at', 'desc')->get();
         
         $variantesEliminadas = Var_producto::onlyTrashed()->with('producto')->get();
         // Retornamos la vista y le pasamos la variable $variantes
