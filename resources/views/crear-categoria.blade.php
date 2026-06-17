@@ -76,6 +76,41 @@
                     </tbody>
                 </table>
             </div>
+            @if(!$categoriasEliminadas->isEmpty())
+            <div class="bg-dark row justify-content-center pt-4">
+                <h4 class="text-center text-white mb-3"><i class="bi bi-archive-fill me-2"></i> Categorias Archivadas / Eliminadas</h4>
+                <div class="table-responsive">
+                    <table class="table table-dark table-bordered border-secondary text-center mb-0">
+                        <thead class="table-secondary text-dark">
+                            <tr>
+                                <th class="py-3 px-2">Nombre</th>
+                                <th class="py-3 px-2">Accion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($categoriasEliminadas as $eliminada)
+                            <tr class="align-middle">                                
+                                <td class="py-3 text-start ps-3">
+                                    <span class="">{{ $eliminada->nombre }}</span>
+                                </td>
+                                {{-- Acción de Restaurar --}}
+                                <td class="py-3">
+                                    <form action="{{ route('categorias.restore', $eliminada->id) }}" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="btn btn-sm btn-primary px-3 shadow-sm" title="Volver a activar en el catálogo">
+                                            <i class="bi bi-arrow-counterclockwise me-1"></i> Activar
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach   
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        @endif
+        {{-- FIN SECCIÓN ELIMINADOS --}}
         </div>
     </div>
 </div>

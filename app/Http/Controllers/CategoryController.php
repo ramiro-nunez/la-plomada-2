@@ -14,7 +14,8 @@ class CategoryController extends Controller
         
         // Retornamos la vista y le pasamos la variable $var_productos
         // usando compact() para que Blade pueda leerla.
-        return view('crear-categoria', compact('categorias'));
+        $categoriasEliminadas = Categoria::onlyTrashed()->get();
+        return view('crear-categoria', compact('categorias', 'categoriasEliminadas'));
     }
 
     public function store(Request $request) { 
@@ -43,5 +44,13 @@ class CategoryController extends Controller
         $categoria->delete();
 
         return redirect()->back()->with('success', 'Categoría eliminada correctamente.');
+    }
+    public function restore($id)
+    {
+        // Buscamos el registro únicamente entre los eliminados y lo restauramos
+        $categoria = Categoria::onlyTrashed()->findOrFail($id);
+        $categoria->restore();
+
+        return redirect()->back()->with('success', 'Categoría reactivada y devuelta al catálogo con éxito.');
     }
 }
