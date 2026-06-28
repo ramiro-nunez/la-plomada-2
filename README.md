@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/logo.png" width="180" alt="La Plomada Logo">
+  <img src="logo.png" width="180" alt="La Plomada Logo">
 </p>
 
 <h1 align="center">La Plomada</h1>
