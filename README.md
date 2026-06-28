@@ -1,8 +1,7 @@
 <p align="center">
-  <img src="logo.png" width="180" alt="La Plomada Logo">
+  <img src="logo.png" width="100%" alt="La Plomada Logo">
 </p>
 
-<h1 align="center">La Plomada</h1>
 <p align="center">Tienda online de artículos de pesca — Trabajo Práctico Desarrollo Web</p>
 
 <p align="center">
@@ -34,9 +33,9 @@
 
 | Documento | Descripción |
 |---|---|
-| [Manual de usuario](docs/manual_usuario.md) | Guía de uso para clientes y administradores |
-| [Guía de instalación](docs/guia_instalacion.md) | Cómo instalar y configurar el proyecto localmente |
-| [DER](docs/der.md) | Diagrama entidad-relación de la base de datos |
+| [Manual de usuario](manual_usuario.md) | Guía de uso para clientes y administradores |
+| [Guía de instalación](guia_instalacion.md) | Cómo instalar y configurar el proyecto localmente |
+| [DER](der.md) | Diagrama entidad-relación de la base de datos |
 
 ---
 
@@ -61,7 +60,7 @@ npm run dev
 
 Acceder en: `http://la-plomada.test`
 
-> Para el detalle completo ver la [Guía de instalación](docs/guia_instalacion.md).
+> Para el detalle completo ver la [Guía de instalación](guia_instalacion.md).
 
 ---
 
