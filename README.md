@@ -33,8 +33,8 @@
 
 | Documento | Descripción |
 |---|---|
-| [Manual de usuario](manual_usuario.md) | Guía de uso para clientes y administradores |
-| [Guía de instalación](guia_instalacion.md) | Cómo instalar y configurar el proyecto localmente |
+| [Manual de usuario](manual_usuario_la_plomada.md) | Guía de uso para clientes y administradores |
+| [Guía de instalación](guia_instalacion_la_plomada.md) | Cómo instalar y configurar el proyecto localmente |
 | [DER](der.md) | Diagrama entidad-relación de la base de datos |
 
 ---
@@ -60,7 +60,7 @@ npm run dev
 
 Acceder en: `http://la-plomada.test`
 
-> Para el detalle completo ver la [Guía de instalación](guia_instalacion.md).
+> Para el detalle completo ver la [Guía de instalación](guia_instalacion_la_plomada.md).
 
 ---
 
